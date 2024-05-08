@@ -2052,5 +2052,4 @@ Return events filtered by query parameters.
       }
     }
     ```
-
-[db-schema]: images/SPOILER_Labyrinthos.png
+[db-schema]: images/schemaProto1.PNG
