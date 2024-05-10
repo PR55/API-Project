@@ -2052,4 +2052,4 @@ Return events filtered by query parameters.
       }
     }
     ```
-[db-schema]: images/schemaProto2.PNG
+[db-schema]: images/schemaProto3.PNG
