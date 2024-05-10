@@ -44,7 +44,9 @@ app.use(
 
 app.use(routes);
 
-
+app.get('/', (req,res) =>{
+  res.json('This is my index route!');
+})
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
