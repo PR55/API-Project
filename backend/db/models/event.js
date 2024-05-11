@@ -13,13 +13,30 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.Image, {
         foreignKey:'eventId',
         onDelete:'CASCADE',
-        as:'previewImage',
+        hooks:true
+      });
+      Event.belongsTo(models.Group,{
+        foreignKey:'groupId',
+        hooks:true
+      });
+      Event.belongsTo(models.Venue,{
+        foreignKey:'venueId',
+        hooks:true
+      });
+      Event.belongsToMany(models.User,{
+        through:'Attendees',
+        foreignKey:'userId',
+        otherKey:'eventId',
+        onDelete:'CASCADE',
         hooks:true
       });
     }
   }
   Event.init({
-    groupId: DataTypes.INTEGER,
+    groupId:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
     venueId:{
       type:DataTypes.INTEGER,
       allowNull:true,
@@ -35,7 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.TEXT,
       allowNull:false,
       validate:{
-        isInt:false,
         lenCheck(value){
           if(value.length < 5){
             throw new Error('Name must be at least 5 characters');
@@ -47,7 +63,6 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.TEXT,
       allowNull:false,
       validate:{
-        isInt:false,
         typeCheck(value){
           let types = ['Online','In person']
           if(!types.includes(value)){
@@ -60,6 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER,
       validate:{
         isInt:{
+          value:true,
           msg:'Capacity must be an integer'
         }
       }
@@ -88,7 +104,6 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.DATE,
       allowNull:false,
       validate:{
-        isDate:true,
         checkCurrent(value){
           let expectedDate = new Date(value);
           let curDate = new Date();
@@ -102,10 +117,9 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.DATE,
       allowNull:false,
       validate:{
-        isDate:true,
         checkCurrent(value){
           let expDate = new Date(value);
-          let starDate = new Date(this.starDate);
+          let starDate = new Date(this.startDate);
           if(expDate < starDate){
             throw new Error("End date is less than start date");
           }

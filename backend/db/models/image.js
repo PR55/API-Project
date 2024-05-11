@@ -12,17 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Image.belongsTo(models.Group, {
         foreignKey:'groupId',
-        as:'previewImage',
         hooks:true
       });
       Image.belongsTo(models.Venue, {
         foreignKey:'venueId',
-        as:'previewImage',
         hooks:true
       });
       Image.belongsTo(models.Event, {
         foreignKey:'eventId',
-        as:'previewImage',
         hooks:true
       });
     }
@@ -30,7 +27,13 @@ module.exports = (sequelize, DataTypes) => {
   Image.init({
     imageUrl:{
       type:DataTypes.TEXT,
-      allowNull:false
+      allowNull:false,
+      validate:{
+        isUrl:{
+          value:true,
+          msg:'Requires a valid image URL'
+        }
+      }
     },
     isPreview:{
       type:DataTypes.BOOLEAN,
@@ -41,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true,
       validate:{
         groupCheck(value){
-          if(value && (this.venueId !== null || this.eventId !== null)){
+          if(value && (this.venueId || this.eventId)){
             throw new Error('Cannot assign group if referencing venue or event');
           }
         }
@@ -52,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true,
       validate:{
         venueCheck(value){
-          if(value && (this.eventId !== null || this.groupId !== null)){
+          if(value && (this.eventId|| this.groupId)){
             throw new Error('Cannot assign venue if referencing event or group');
           }
         }
@@ -63,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true,
       validate:{
         eventCheck(value){
-          if(value && (this.venueId !== null || this.groupId !== null)){
+          if(value && (this.venueId|| this.groupId)){
             throw new Error('Cannot assign event if referencing venue or group');
           }
         }

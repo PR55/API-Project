@@ -10,13 +10,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       eventId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
       },
       status: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull:false
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +31,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
+    });
+
+    await queryInterface.addIndex('Attendees', ['eventId', 'userId'], {
+      unique:true
     });
   },
   async down(queryInterface, Sequelize) {

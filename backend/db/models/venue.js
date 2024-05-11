@@ -13,7 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       Venue.hasMany(models.Image, {
         foreignKey:'venueId',
         onDelete:'CASCADE',
-        as:'previewImage',
+        hooks:true
+      });
+      Venue.hasMany(models.Event,{
+        foreignKey:'venueId',
+        onDelete:'CASCADE',
+        hooks:true
+      })
+      Venue.belongsTo(models.Group, {
+        foreignKey:'groupId',
         hooks:true
       });
     }
@@ -27,10 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.TEXT,
       allowNull:false,
       validate:{
-        addressCheck(value){
-          if(!value){
-            throw new Error('Street address is required');
-          }
+        notEmpty:{
+          msg:'Street address is required'
+        },
+        notNull:{
+          msg:'Street address is required'
         }
       }
     },
@@ -38,10 +47,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.TEXT,
       allowNull:false,
       validate:{
-        addressCheck(value){
-          if(!value){
-            throw new Error('City is required');
-          }
+        notEmpty:{
+          msg:'City is required'
+        },
+        notNull:{
+          msg:'City is required'
         }
       }
     },
@@ -49,10 +59,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.TEXT,
       allowNull:false,
       validate:{
-        addressCheck(value){
-          if(!value){
-            throw new Error('State is required');
-          }
+        notEmpty:{
+          msg:'State is required'
+        },
+        notNull:{
+          msg:'State is required'
         }
       }
     },

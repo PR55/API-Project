@@ -10,13 +10,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
       },
       memberId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
       },
-      stats: {
-        type: Sequelize.TEXT
+      status: {
+        type: Sequelize.TEXT,
+        allowNull:false
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +32,10 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
+
+    await queryInterface.addIndex('Members', ['groupId', 'memberId'], {
+      unique:true
+    })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Members');

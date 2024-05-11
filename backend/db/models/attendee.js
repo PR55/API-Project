@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const group = require('./group');
 module.exports = (sequelize, DataTypes) => {
   class Attendee extends Model {
     /**
@@ -10,7 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Attendee.belongsTo(models.User,{
+        foreignKey:'userId',
+        hooks:true
+      });
+      Attendee.belongsTo(models.Event, {
+        foreignKey:'eventId',
+        hooks:true
+      })
     }
   }
   Attendee.init({

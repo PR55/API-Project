@@ -13,7 +13,27 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(models.Image, {
         foreignKey:'groupId',
         onDelete:'CASCADE',
-        as:'previewImage',
+        hooks:true
+      });
+      Group.hasMany(models.Venue, {
+        foreignKey:'groupId',
+        onDelete:'CASCADE',
+        hooks:true
+      })
+      Group.hasMany(models.Event,{
+        foreignKey:'groupId',
+        onDelete:'CASCADE',
+        hooks:true
+      })
+      Group.belongsTo(models.User, {
+        foreignKey:'organizerId',
+        hooks:true
+      });
+      Group.belongsToMany(models.User,{
+        through:'Members',
+        foreignKey:'memberId',
+        otherKey:'groupId',
+        onDelete:'CASCADE',
         hooks:true
       });
     }
