@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Group } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -28,6 +28,42 @@ const validateSignup = [
       .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
   ];
+
+router.get('/groups', async (req,res)=>{
+
+    const {user} = req;
+
+    if(user){
+      const authUser = await User.findByPk(user.id);
+
+      if(authUser !== null){
+
+        let Groups = await Group.findAll({
+            where:{
+                organizerId:authUser.id
+            }
+        })
+
+        const memberGroups = await authUser.getGroups();
+
+        for(let g of memberGroups){
+            if(!Groups.includes(g)){
+                Groups.push(g)
+            }
+        }
+
+        Groups.concat(memberGroups);
+
+        res.json(Groups);
+      }else{
+        res.status(400);
+        res.json({message:'User does not exist'})
+      }
+    } else{
+      res.json({message:'Not currently logged in'})
+    }
+});
+
 
 // Sign up
 router.post('/', validateSignup,async (req, res) => {

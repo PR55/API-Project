@@ -1,5 +1,15 @@
 'use strict';
 
+const {Attendee} = require('../models')
+
+const attendees =[
+  {
+    eventId:1,
+    userId:3,
+    status:'pending'
+  }
+];
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -12,6 +22,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+   await Attendee.bulkCreate(attendees, {validate:true})
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +32,11 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    for(let attendee of attendees){
+      await queryInterface.bulkDelete('Attendees', {
+        eventId:attendee.eventId,
+        userId:attendee.userId
+      })
+    }
   }
 };

@@ -35,11 +35,12 @@ module.exports = {
      */
     let names = [];
     for(let group of members){
-      names.push(group.memberId);
+      await queryInterface.bulkDelete('Members', {
+        memberId:group.memberId,
+        groupId:group.groupId
+      });
     }
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete('Members', {
-      memberId:{[Op.in]:names},
-    });
+
   }
 };

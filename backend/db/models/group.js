@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         textLength(value){
-          const types = ['Online', 'In Person']
+          const types = ['Online', 'In person']
           if(!types.includes(value)){
             throw new Error(`Type must be 'Online' or 'In person'`);
           }

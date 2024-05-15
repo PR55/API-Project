@@ -23,7 +23,19 @@ module.exports = (sequelize, DataTypes) => {
   Member.init({
     groupId: DataTypes.INTEGER,
     memberId: DataTypes.INTEGER,
-    status: DataTypes.TEXT
+    status:{
+      type: DataTypes.TEXT,
+      allowNull:false,
+      validate:{
+        application(value){
+          const levels=['pending', 'member', 'co-host', 'organizer'];
+
+          if(!levels.includes(value)){
+            throw new Error('Invalid membership type');
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Member',

@@ -5,10 +5,6 @@ const { Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.hasMany(models.Group,{
-        foreignKey:'organizerId',
-        hooks:true
-      });
       User.belongsToMany(models.Group,{
         through:'Members',
         foreignKey:'memberId',
@@ -21,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'userId',
         otherKey:'eventId',
         onDelete:'CASCADE',
+        hooks:true
+      });
+      User.hasMany(models.Group,{
+        foreignKey:'organizerId',
         hooks:true
       });
     }

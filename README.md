@@ -283,7 +283,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /groups/:userId
+  * URL: /users/group
   * Body: none
 
 * Successful Response
@@ -618,7 +618,7 @@ Returns all venues for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: GET
-  * URL: /vanues/:venueId
+  * URL: /venues/:groupId
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -667,7 +667,7 @@ Creates and returns a new venue for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /venue
+  * URL: /venues/:groupId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -740,7 +740,7 @@ Edit a new venue specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PATCH
-  * URL: /venue/:id
+  * URL: /venue/:venueId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -813,7 +813,7 @@ Returns all the events.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /event
+  * URL: /events
   * Body: none
 
 * Successful Response
@@ -951,7 +951,7 @@ Returns the details of an event specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /event/:id
+  * URL: /events/:eventId
   * Body: none
 
 * Successful Response
@@ -1152,7 +1152,7 @@ Edit and returns an event specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PATCH
-  * URL: /event/:eventId
+  * URL: /events/:eventId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1246,7 +1246,7 @@ Delete an event specified by its id
   the group with a status of "co-host"
 * Request
   * Method: DELETE
-  * URL: /event/:eventId
+  * URL: /events/:eventId
   * Body: none
 
 * Successful Response
@@ -1282,7 +1282,7 @@ Returns the members of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /users/:groupId
+  * URL: /members/:groupId
   * Body: none
 
 * Successful Response: If you ARE the organizer or a co-host of the group. Shows
@@ -1372,7 +1372,7 @@ Request a new membership for a group specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /group/:groupId/request
+  * URL: /members/:groupId/request
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1694,7 +1694,7 @@ Request attendance for an event specified by id.
 * Require Authorization: Current User must be a member of the group
 * Request
   * Method: POST
-  * URL: /event/:eventId/attendance
+  * URL: /attend/:eventId
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1758,7 +1758,7 @@ Change the status of an attendance for an event specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PATCH
-  * URL: /event/:eventId/attendance
+  * URL: /attend/:eventId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1830,7 +1830,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: /event/:eventId/attendance
+  * URL: /attend/:eventId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1900,7 +1900,7 @@ Delete an existing image for a Group.
   of the Group
 * Request
   * Method: DELETE
-  * URL: /group/:groupId/image/:imageId
+  * URL: /groups/:groupId/images/:imageId
   * Body: none
 
 * Successful Response
@@ -1937,7 +1937,7 @@ Delete an existing image for an Event.
   of the Group that the Event belongs to
 * Request
   * Method: DELETE
-  * URL: /event/:eventId/image/:imageId
+  * URL: /events/:eventId/images/:imageId
   * Body: none
 
 * Successful Response
