@@ -2,10 +2,13 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Group,Member, Image } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const member = require('../../db/models/member');
+
+const {Op} = require('sequelize');
 
 const router = express.Router();
 
@@ -28,6 +31,85 @@ const validateSignup = [
       .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
   ];
+
+router.get('/groups', requireAuth,async (req,res)=>{
+
+    const {user} = req;
+
+  let Groups = await Group.findAll({
+      where:{
+          organizerId:user.id
+      }
+  })
+
+  let toReturn = [];
+
+  for(let group of Groups){
+    let g = group.toJSON();
+    if(g){
+      let numMembers = await Member.count({
+        where:{
+          groupId:g.id,
+          status:{[Op.in]:['member','co-host']}
+        }
+      });
+      numMembers += 1;
+      const img = await Image.findOne({
+        where:{
+          groupId:g.id,
+          isPreview:true
+        }
+      })
+      let holA;
+      if(img){
+        holA = {...g,numMembers, previewImage:img.imageUrl};
+      }else{
+        holA = {...g,numMembers, previewImage:null};
+      }
+      toReturn.push(holA);
+    }
+  }
+
+  const memberGroups = await Member.findAll({
+    where:{
+      memberId:user.id,
+      status:{[Op.in]:['member','co-host']}
+    }
+  });
+
+  for(let memG of memberGroups){
+    let g = await Group.findByPk(memG.groupId);
+      if(g){
+        g = g.toJSON();
+        let numMembers = await Member.count({
+          where:{
+            groupId:g.id,
+            status:{[Op.in]:['member','co-host']}
+          }
+        });
+        numMembers += 1;
+        const img = await Image.findOne({
+          where:{
+            groupId:g.id,
+            isPreview:true
+          }
+        })
+        let holA;
+        if(img){
+          holA = {...g,numMembers, previewImage:img.imageUrl};
+        }else{
+          holA = {...g,numMembers, previewImage:null};
+        }
+        if(!toReturn.includes(holA)){
+          toReturn.push(holA)
+        }
+      }
+  }
+  // console.log(memberGroups);
+
+  res.json(toReturn);
+});
+
 
 // Sign up
 router.post('/', validateSignup,async (req, res) => {
