@@ -1,5 +1,10 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const {Venue} = require('../models');
 
 const Venues = [
@@ -63,7 +68,6 @@ const Venues = [
   }
 ]
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
@@ -75,7 +79,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await Venue.bulkCreate(Venues, {validate:true});
+    await Venue.bulkCreate(Venues, { ...options,validate: true });
   },
 
   async down (queryInterface, Sequelize) {
@@ -95,6 +99,6 @@ module.exports = {
     await queryInterface.bulkDelete('Venues', {
       address:{[Op.in]:address},
       groupId:{[Op.in]:groupIds}
-    });
+    }, options);
   }
 };

@@ -155,21 +155,20 @@ const users = [
 module.exports = {
   async up (queryInterface, Sequelize) {
     try {
-      await User.bulkCreate(users, { validate: true });
+      await User.bulkCreate(users, { ...options,validate: true });
     } catch (error) {
       console.log(error)
     }
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Users';
     const Op = Sequelize.Op;
     let names = [];
     for(let user of users){
       names.push(user.email);
     }
-    return queryInterface.bulkDelete(options, {
+    return queryInterface.bulkDelete('Users', {
       email: { [Op.in]: names}
-    }, {});
+    }, options);
   }
 };

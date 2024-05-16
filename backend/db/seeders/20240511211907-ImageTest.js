@@ -1,5 +1,10 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const {Image} = require('../models');
 
 const images = [
@@ -65,7 +70,6 @@ const images = [
   }
 ]
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
@@ -77,7 +81,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await Image.bulkCreate(images, {validate:true});
+    await Image.bulkCreate(images, { ...options,validate: true });
   },
 
   async down (queryInterface, Sequelize) {
@@ -100,10 +104,10 @@ module.exports = {
     await queryInterface.bulkDelete('Images', {
       imageUrl:{[Op.in]:names},
       groupId:{[Op.in]:groupIds}
-    });
+    }, options);
     await queryInterface.bulkDelete('Images', {
       imageUrl:{[Op.in]:names},
       eventId:{[Op.in]:eventIds}
-    });
+    }, options);
   }
 };

@@ -1,5 +1,10 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const {Group} = require('../models');
 
 const groups = [
@@ -50,7 +55,6 @@ const groups = [
   }
 ]
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
@@ -62,7 +66,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await Group.bulkCreate(groups, {validate:true});
+   await Group.bulkCreate(groups, { ...options,validate: true });
   },
 
   async down (queryInterface, Sequelize) {
@@ -73,12 +77,15 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     let names = [];
+    let orgaIds = [];
     for(let group of groups){
       names.push(group.name);
+      orgaIds.push(group.organizerId);
     }
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete('Groups', {
-      name:{[Op.in]:names}
-    });
+      name:{[Op.in]:names},
+      organizerId:{[Op.in]:orgaIds}
+    }, options);
   }
 };

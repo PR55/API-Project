@@ -1,7 +1,11 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const {Event} = require('../models');
-
 
 const events = [
   {
@@ -127,8 +131,6 @@ const events = [
   }
 ];
 
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
@@ -140,7 +142,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await Event.bulkCreate(events, {validate:true});
+    await Event.bulkCreate(events, { ...options,validate: true });
   },
 
   async down (queryInterface, Sequelize) {
@@ -166,6 +168,6 @@ module.exports = {
       groupId:{[Op.in]:groupIds},
       startDate:{[Op.in]:startDates},
       endDate:{[Op.in]:endDates}
-    });
+    }, options);
   }
 };
