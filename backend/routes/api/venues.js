@@ -16,7 +16,7 @@ const router = express.Router();
 // cleared
 router.get('/:groupId', requireAuth,async (req,res) => {
 
-    const group = await Group.findByPk(req.params.groupId);
+    const group = await Group.findByPk(parseInt(req.params.groupId));
 
     if(group !== null){
         const {user} = req;
@@ -50,7 +50,7 @@ router.get('/:groupId', requireAuth,async (req,res) => {
 router.post('/:groupId', requireAuth, async (req,res) => {
 
     const user = req.user;
-    const group = await Group.findByPk(req.params.groupId);
+    const group = await Group.findByPk(parseInt(req.params.groupId));
 
     if(group){
         if(group.organizerId === user.id){
@@ -140,7 +140,7 @@ router.post('/:groupId', requireAuth, async (req,res) => {
 router.patch('/:venueId', requireAuth, async (req,res) => {
 
     const user = req.user;
-    const venue = await Venue.findByPk(req.params.venueId);
+    const venue = await Venue.findByPk(parseInt(req.params.venueId));
     if(venue){
     const group = await Group.findByPk(venue.groupId);
         if(group.organizerId === user.id){
