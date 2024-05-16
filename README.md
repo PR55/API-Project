@@ -12,6 +12,7 @@
 
 * Program the front end
 * Allow hosts of events to manage attendees (option to enable per an event, default true)
+* Add and manage photos to venues for a group
 
 ## Database Schema Design
 
