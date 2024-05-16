@@ -13,7 +13,7 @@ const groups = [
     state:'MA'
   },
   {
-    organizerId:1,
+    organizerId:4,
     name:'ab',
     about:'This is the 2nd test group.   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     type:'Online',
@@ -22,9 +22,27 @@ const groups = [
     state:'MA'
   },
   {
-    organizerId:1,
+    organizerId:9,
     name:'abc',
     about:'This is the 3rd test group.   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    type:'Online',
+    private:false,
+    city:'Cincinatti',
+    state:'MA'
+  },
+  {
+    organizerId:3,
+    name:'abcd',
+    about:'This is the 4th test group.   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    type:'Online',
+    private:true,
+    city:'Cincinatti',
+    state:'MA'
+  },
+  {
+    organizerId:11,
+    name:'abcde',
+    about:'This is the 5th test group.   eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     type:'Online',
     private:false,
     city:'Cincinatti',

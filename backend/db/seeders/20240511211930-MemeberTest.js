@@ -7,6 +7,57 @@ const members = [
     groupId:1,
     memberId:2,
     status:'pending'
+  },
+  {
+    groupId:1,
+    memberId:3,
+    status:'member'
+  },
+  {
+    groupId:1,
+    memberId:4,
+    status:'co-host'
+  },
+  {
+    groupId:1,
+    memberId:5,
+    status:'member'
+  },
+  {
+    groupId:1,
+    memberId:6,
+    status:'pending'
+  },
+  {
+    groupId:1,
+    memberId:7,
+    status:'member'
+  }
+  ,
+  {
+    groupId:2,
+    memberId:1,
+    status:'member'
+  },
+  {
+    groupId:3,
+    memberId:1,
+    status:'co-host'
+  },
+  {
+    groupId:4,
+    memberId:1,
+    status:'member'
+  },
+  {
+    groupId:5,
+    memberId:1,
+    status:'pending'
+  },
+  {
+    groupId:1,
+    memberId:12,
+    status:'member'
   }
 ]
 
@@ -33,14 +84,12 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    let names = [];
     for(let group of members){
       await queryInterface.bulkDelete('Members', {
         memberId:group.memberId,
         groupId:group.groupId
       });
     }
-    const Op = Sequelize.Op;
 
   }
 };

@@ -10,6 +10,56 @@ const Venues = [
     state:'FL',
     lat:28.37065,
     lng:-81.51936
+  },{
+    groupId:1,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:26.37065,
+    lng:-81.51936
+  },{
+    groupId:1,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:27.37065,
+    lng:-81.51936
+  },{
+    groupId:1,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:29.37065,
+    lng:-81.51936
+  },
+  {
+    groupId:9,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:28.37065,
+    lng:-81.51936
+  },{
+    groupId:8,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:26.37065,
+    lng:-81.51936
+  },{
+    groupId:2,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:27.37065,
+    lng:-81.51936
+  },{
+    groupId:2,
+    address:'1486 Buena Vista Dr',
+    city:'Lake Buena Vista',
+    state:'FL',
+    lat:29.37065,
+    lng:-81.51936
   }
 ]
 
@@ -36,12 +86,15 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     let address = [];
+    let groupIds = [];
     for(let group of Venues){
       address.push(group.address);
+      groupIds.push(group.groupId);
     }
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete('Venues', {
-      address:{[Op.in]:address}
+      address:{[Op.in]:address},
+      groupId:{[Op.in]:groupIds}
     });
   }
 };

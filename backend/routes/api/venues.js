@@ -13,26 +13,40 @@ const { handleValidationErrors } = require('../../utils/validation');
 const member = require('../../db/models/member');
 
 const router = express.Router();
-
+// cleared
 router.get('/:groupId', requireAuth,async (req,res) => {
 
     const group = await Group.findByPk(req.params.groupId);
 
     if(group !== null){
-        const groups = await Venue.findAll({
+        const {user} = req;
+        const membership = await Member.findOne({
             where:{
-                groupId:group.id
+                groupId:group.id,
+                memberId:user.id
             }
         });
+        const isOrganizer = group.organizerId === user.id;
+        const isCoHost = membership? membership.status === 'co-host' :false;
+        if(isOrganizer || isCoHost){
+            const groups = await Venue.findAll({
+                where:{
+                    groupId:group.id
+                }
+            });
 
-        return res.json(groups);
+            return res.json(groups);
+        }else{
+            res.status(400);
+            res.json({message:"User must be the organizer or co-host to view this info"});
+        }
     }else{
         res.status(404);
         res.json({"message": "Group couldn't be found"});
     }
 
 });
-
+//cleared
 router.post('/:groupId', requireAuth, async (req,res) => {
 
     const user = req.user;
@@ -122,7 +136,7 @@ router.post('/:groupId', requireAuth, async (req,res) => {
     }
 
 })
-
+//cleared
 router.patch('/:venueId', requireAuth, async (req,res) => {
 
     const user = req.user;

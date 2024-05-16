@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Image',
     defaultScope:{
       attributes:{
-        exclude:['groupId','venueId','eventId']
+        exclude:['groupId','venueId','eventId', 'createdAt', 'updatedAt']
       }
     }
   });
