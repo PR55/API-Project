@@ -1,5 +1,18 @@
 # `Greeters`
 
+## Live Site
+
+* https://greeters.onrender.com
+
+## Summary
+
+* This is a clone of the website '[Meetup](https://www.meetup.com/)'. For now this is purely the backend setup, allowing Users to sign up, make and join Groups, add Images via outside storage links to Groups and Events, create Venues and Events for groups, and manage who can join their event/group by removing them or denying the requst a User make towards a group event if need be.
+
+## To-Dos
+
+* Program the front end
+* Allow hosts of events to manage attendees (option to enable per an event, default true)
+
 ## Database Schema Design
 
 ![db-schema]
