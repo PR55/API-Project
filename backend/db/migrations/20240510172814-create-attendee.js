@@ -37,10 +37,6 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
-
-    await queryInterface.addIndex('Attendees', ['eventId', 'userId'], {
-      unique:true
-    }, options);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Attendees', options);

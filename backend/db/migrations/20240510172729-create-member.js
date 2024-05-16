@@ -38,9 +38,6 @@ module.exports = {
       }
     }, options);
 
-    await queryInterface.addIndex('Members', ['groupId', 'memberId'], {
-      unique:true
-    }, options)
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Members', options);
