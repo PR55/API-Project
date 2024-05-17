@@ -6,7 +6,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group, Event, Venue, Member, Attendee, Image} = require('../../db/models');
+const { User, Group, Event, Venue, Member, Attendee, EventImage} = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -75,7 +75,7 @@ router.get('/', async (req,res) => {
     });
     let toReturn = [];
     for(let event of events){
-        let img = await Image.findOne({
+        let img = await EventImage.findOne({
             where:{
                 eventId:event.id,
                 isPreview:true
@@ -106,7 +106,7 @@ router.get('/', async (req,res) => {
             startDate:event.startDate,
             endDate:event.endDate,
             numAttending,
-            previewImage: img ?img.imageUrl:null,
+            previewImage: img ?img.url:null,
             Group:group,
             Venue:venue ?venue:null
 
@@ -119,10 +119,18 @@ router.get('/', async (req,res) => {
 });
 //cleared
 router.get('/:eventId', async (req,res) => {
-    let event = await Event.findByPk(parseInt(req.params.eventId))
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
 
     if(event){
-        let img = await Image.findAll({
+        let img = await EventImage.findAll({
             where:{
                 eventId:event.id
             }
@@ -165,9 +173,15 @@ router.get('/:eventId', async (req,res) => {
 });
 //cleared
 router.get('/:eventId/attendees', async (req,res) => {
-    let eventId = parseInt(req.params.eventId);
-    const event = await Event.findByPk(eventId);
+    let event;
 
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     const attendanceSorter = (Attendees)=>{
         let toReturn = [];
 
@@ -199,7 +213,7 @@ router.get('/:eventId/attendees', async (req,res) => {
             if(isOwner || isCoHost){
                 const attendees = await Attendee.findAll({
                     where:{
-                        eventId:eventId,
+                        eventId:event.id,
                         status:{[Op.in]:['pending','waitlist','attending','co-host','host']}
                     },
                     include:{model:User}
@@ -209,7 +223,7 @@ router.get('/:eventId/attendees', async (req,res) => {
             }else{
                 const attendees = await Attendee.findAll({
                     where:{
-                        eventId:eventId,
+                        eventId:event.id,
                         status:{[Op.in]:['waitlist','attending','co-host','host']}
                     },
                     include:{model:User}
@@ -220,7 +234,7 @@ router.get('/:eventId/attendees', async (req,res) => {
         }else{
             const attendees = await Attendee.findAll({
                 where:{
-                    eventId:eventId,
+                    eventId:event.id,
                     status:{[Op.in]:['attending','co-host','host']}
                 },
                 include:{model:User}
@@ -240,7 +254,15 @@ router.get('/:eventId/attendees', async (req,res) => {
 router.post('/:eventId/images', requireAuth,async(req,res)=>{
     const {preview, url} = req.body;
     const {user} = req;
-    const event = await Event.findByPk(parseInt(req.params.eventId));
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     if(event){
         const attendStatus = await Attendee.findOne({
             where:{
@@ -254,7 +276,7 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
         if(isAble){
             try {
                 if(preview === true){
-                    let oldImage = await Image.findOne({
+                    let oldImage = await EventImage.findOne({
                         where:{
                             eventId:event.id,
                             isPreview:true
@@ -267,8 +289,8 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
                     };
                 };
 
-                const newImage = await Image.create({
-                    imageUrl:url,
+                const newImage = await EventImage.create({
+                    url:url,
                     isPreview:preview,
                     eventId:event.id
                 }, {validate:true});
@@ -302,7 +324,15 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
 });
 //cleared
 router.post('/:eventId/attendance', requireAuth,async(req,res) => {
-    const event = await Event.findByPk(parseInt(req.params.eventId));
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     const {user} = req;
     if(event){
         const attendance = await Attendee.findOne({
@@ -340,7 +370,15 @@ router.post('/:eventId/attendance', requireAuth,async(req,res) => {
 //cleared
 router.put('/:eventId', requireAuth ,async (req,res)=>{
     const {user} = req;
-    let event = await Event.findByPk(parseInt(req.params.eventId));
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     const errors = {};
     if(event){
         const group = await Group.findByPk(event.groupId);
@@ -416,8 +454,15 @@ router.put('/:eventId', requireAuth ,async (req,res)=>{
 });
 //cleared
 router.put('/:eventId/attendance', requireAuth,async (req,res) => {
-    let eventId = parseInt(req.params.eventId);
-    const event = await Event.findByPk(eventId);
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     if(event){
         const group = await Group.findByPk(event.groupId);
         const {user} = req;
@@ -501,7 +546,15 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
 //cleared
 router.delete('/:eventId', requireAuth,async (req,res) => {
     const {user} = req;
-    const event = await Event.findByPk(parseInt(req.params.eventId));
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     if(event){
         const group = await Group.findByPk(event.groupId);
         const memberStatus = await Member.findOne(
@@ -533,8 +586,15 @@ router.delete('/:eventId', requireAuth,async (req,res) => {
 })
 //cleared
 router.delete('/:eventId/attendance/:userId', requireAuth,async (req,res) => {
-    let eventId = parseInt(req.params.eventId);
-    const event = await Event.findByPk(eventId);
+    let event;
+
+    try {
+        event = await Event.findByPk(parseInt(req.params.eventId));
+    } catch (error) {
+
+        res.status(404)
+        return res.json({message:"Event couldn't be found"});
+    }
     if(event){
         const group = await Group.findByPk(event.groupId);
         const {user} = req;

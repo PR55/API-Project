@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group, Event, Venue, Member, Attendee, Image} = require('../../db/models');
+const { User, Group, Event, Venue, Member, Attendee, EventImage} = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -16,16 +16,13 @@ router.delete('/:imageId', requireAuth,async (req,res) => {
     let imageId = parseInt(req.params.imageId);
     let img;
     try {
-        img = await Image.findOne({
-            where:{
-                id:imageId
-            }
-        });
+        img = await EventImage.findByPk(imageId);
     } catch (error) {
         res.status(400);
         return res.json({message:"Invalid image id requested", val:{raw:req.params.imageId, parsed:imageId}});
     }
     if(img){
+        console.log(img.toJSON());
         const event = await Event.findByPk(img.eventId);
         const group = await Group.findByPk(event.groupId);
         const {user} = req;

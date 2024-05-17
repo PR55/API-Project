@@ -154,11 +154,7 @@ const users = [
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    try {
-      await User.bulkCreate(users, { ...options,validate: true });
-    } catch (error) {
-      console.log(error)
-    }
+    await User.bulkCreate(users, { ...options,validate: true });
   },
 
   async down (queryInterface, Sequelize) {

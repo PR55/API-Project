@@ -18,7 +18,13 @@ const router = express.Router();
 router.put('/:venueId', requireAuth, async (req,res) => {
 
     const user = req.user;
-    const venue = await Venue.findByPk(parseInt(req.params.venueId));
+    let venue;
+    try {
+        venue = await Venue.findByPk(parseInt(req.params.venueId));
+    } catch (error) {
+        res.status(404);
+        res.json({"message": "Venue couldn't be found"});
+    }
     if(venue){
     const group = await Group.findByPk(venue.groupId);
         if(group.organizerId === user.id){
