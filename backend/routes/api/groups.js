@@ -701,7 +701,7 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
     const {memberId, status} = req.body;
     const {user} = req;
     const group = await Group.findByPk(req.params.groupId);
-    const statusTypes = ['pending', 'member', 'co-host', 'organizer']
+    const statusTypes = ['member', 'co-host', 'organizer']
     if(group){
         if(user.id === group.organizerId){
             const memUser = await User.findByPk(memberId);
@@ -714,7 +714,10 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                     }
                 });
                 if(toPromote){
-                    if((status === 'member' && (toPromote.status === 'pending' || toPromote.status === 'co-host')) || (status === 'co-host' && toPromote.status === 'member')){
+                    let isPending = toPromote.status === 'pending';
+                    let isMem = toPromote.status === 'member';
+                    let isCo = toPromote.status === 'co-host';
+                    if(((status === 'member' && (isPending||isCo)) || (status === 'co-host' && (isPending||isMem)))){
                         toPromote.status = status;
                         await toPromote.validate();
                         await toPromote.save();
@@ -724,10 +727,6 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                         const errObj = {message:"Bad Message", errors:{}};
                         if(status === 'pending'){
                             errObj.errors['status'] = "Cannot set a user's status to pending";
-                        }else if(status === 'co-host'){
-                            errObj.errors['status'] = "User must already be a member to become a co-host";
-                        }else if(status === 'member'){
-                            errObj.errors['status'] = "User is already a member, must be pending or co-host to change";
                         }else{
                             errObj.errors['status'] = "Invalid status has been sent. Can only be one of these types: ['member','co-host']";
                         }
@@ -763,7 +762,7 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                     }
                 });
                 if(toPromote){
-                    if((status === 'member' && (toPromote.status === 'pending'))){
+                    if(((status === 'member') && (toPromote.status === 'pending'))){
                         toPromote.status = status;
                         await toPromote.save();
                         res.json({id:toPromote.id,groupId:group.id, memberId:user.id, status:toPromote.status});
@@ -773,7 +772,7 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                         if(status === 'pending'){
                             errObj.errors['status'] = "Cannot set a user's status to pending";
                         }else if(status === 'co-host'){
-                            errObj.errors['status'] = "Proper status not obetained, must be an organizer of a group to make some a co-host";
+                            errObj.errors['status'] = "Proper status not obtained, must be an organizer of a group to make some a co-host";
                         }else if(status === 'member'){
                             errObj.errors['status'] = "User is already a member, must be pending to change";
                         }else{
@@ -796,7 +795,7 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
             }
             }else{
                 res.status(403);
-                res.json({message:'Invalid Request', errors:{user:"User is either not a co-host, organizer or is not a part of the group."}})
+                res.json({message:'Invalid Request', errors:{user:"User is not a co-host or organizer of the group."}})
             }
         }
     }else{

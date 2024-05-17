@@ -13,11 +13,19 @@ const e = require('express');
 const router = express.Router();
 
 router.delete('/:imageId', requireAuth,async (req,res) => {
-    const img = await Image.findOne({
-        where:{
-            id:parseInt(req.params.imageId)
-        }
-    });
+
+    let imageId = parseInt(req.params.imageId);
+    let img;
+    try {
+        img = await Image.findOne({
+            where:{
+                id:imageId
+            }
+        });
+    } catch (error) {
+        res.status(400);
+        return res.json({message:"Invalid image id requested", val:{raw:req.params.imageId, parsed:imageId}});
+    }
     if(img){
         const group = await Group.findByPk(parseInt(img.groupId));
         const {user} = req;
@@ -28,7 +36,7 @@ router.delete('/:imageId', requireAuth,async (req,res) => {
             }
         });
 
-        const isHost = group.organizerId === user.id;
+        const isHost = group ? group.organizerId === user.id: false;
         const isCoHost = membership?membership.status === 'co-host':false;
         if(isHost || isCoHost){
             await img.destroy();
