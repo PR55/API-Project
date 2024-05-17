@@ -297,7 +297,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: {{url}}/api/users/groups
+  * URL: {{url}}/api/groups/current
   * Body: none
 
 * Successful Response
@@ -471,7 +471,7 @@ Create and return a new image for a group specified by id.
 * Require proper authorization: Current User must be the organizer for the group
 * Request
   * Method: POST
-  * URL: {{url}}/api/groups/:id/images
+  * URL: {{url}}/api/groups/:groupId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -516,7 +516,7 @@ Updates and returns an existing group.
 * Require Authentication: true
 * Require proper authorization: Group must belong to the current user
 * Request
-  * Method: PATCH
+  * Method: PUT
   * URL: {{url}}/api/groups/:groupId
   * Headers:
     * Content-Type: application/json
@@ -632,7 +632,7 @@ Returns all venues for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: GET
-  * URL: {{url}}/api/venues/:groupId
+  * URL: {{url}}/api/groups/:groupId/venues
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -681,7 +681,7 @@ Creates and returns a new venue for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: {{url}}/api/venues/:groupId
+  * URL: {{url}}/api/groups/:groupId/venues
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -753,7 +753,7 @@ Edit a new venue specified by its id
 * Require Authentication: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
 * Request
-  * Method: PATCH
+  * Method: PUT
   * URL: {{url}}/api/venues/:venueId
   * Headers:
     * Content-Type: application/json
@@ -1038,7 +1038,7 @@ Creates and returns a new event for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: {{url}}/api/events/:groupId
+  * URL: {{url}}/api/groups/:groupId/events
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1165,7 +1165,7 @@ Edit and returns an event specified by its id
 * Require Authorization: Current User must be the organizer of the group or a member of
   the group with a status of "co-host"
 * Request
-  * Method: PATCH
+  * Method: PUT
   * URL: {{url}}/api/events/:eventId
   * Headers:
     * Content-Type: application/json
@@ -1386,7 +1386,7 @@ Request a new membership for a group specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: {{url}}/api/groups/:groupId/members
+  * URL: {{url}}/api/groups/:groupId/membership
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1453,8 +1453,8 @@ Change the status of a membership for a group specified by id.
   * To change the status from "member" to "co-host":
     * Current User must already be the organizer
 * Request
-  * Method: PATCH
-  * URL: {{url}}/api/groups/:groupId/members
+  * Method: PUT
+  * URL: {{url}}/api/groups/:groupId/membership
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1544,16 +1544,10 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: {{url}}/api/groups/:groupId/members
+  * URL: {{url}}/api/groups/:groupId/membership/:memberId
   * Headers:
     * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "memberId": 1
-    }
-    ```
+  * Body: none
 
 * Successful Response
   * Status Code: 200
@@ -1708,7 +1702,7 @@ Request attendance for an event specified by id.
 * Require Authorization: Current User must be a member of the group
 * Request
   * Method: POST
-  * URL: {{url}}/api/events/:eventId/attendees
+  * URL: {{url}}/api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1771,8 +1765,8 @@ Change the status of an attendance for an event specified by id.
 * Require proper authorization: Current User must already be the organizer or
   have a membership to the group with the status of "co-host"
 * Request
-  * Method: PATCH
-  * URL: {{url}}/api/events/:eventId/attendees
+  * Method: PUT
+  * URL: {{url}}/api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1844,7 +1838,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: {{url}}/api/events/:eventId/attendees
+  * URL: {{url}}/api/events/:eventId/attendance/:userId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1914,8 +1908,7 @@ Delete an existing image for a Group.
   of the Group
 * Request
   * Method: DELETE
-  * URL: {{url}}/api/groups/:groupId/images?searchId={INTEGER}
-  * URL EXAMPLE:`{{url}}/api/groups/1/images?searchId=1` Deletes the first image found in the group relation, using offset in Image.findOne() queryParams.
+  * URL: {{url}}/api/group-images/:imageId
   * Body: none
 
 * Successful Response
@@ -1952,8 +1945,7 @@ Delete an existing image for an Event.
   of the Group that the Event belongs to
 * Request
   * Method: DELETE
-  * URL: {{url}}/api/events/:eventId/images?searchId={INTEGER}
-  * URL EXAMPLE:`{{url}}/api/events/1/images?searchId=1` Deletes the first image found in the event relation, using offset in Image.findOne() queryParams.
+  * URL: {{url}}/api/event-images/:imageId
   * Body: none
 
 * Successful Response
