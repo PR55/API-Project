@@ -13,6 +13,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const {Op} = require('sequelize');
 const e = require('express');
+const venue = require('../../db/models/venue');
 
 const router = express.Router();
 
@@ -376,11 +377,24 @@ router.put('/:eventId', requireAuth ,async (req,res)=>{
                         message:"Bad Request",
                         errors
                     })
-                }
+                };
                 await event.validate();
                 await event.save();
 
-                res.json(event);
+                const safeEvent = {
+                    id:event.id,
+                    groupId:group.id,
+                    venueId:newVenue.id,
+                    name:event.name,
+                    type:event.type,
+                    capacity:event.capacity,
+                    price:event.price,
+                    description:event.description,
+                    startDate:event.startDate,
+                    endDate:event.endDate
+                };
+
+                res.json(safeEvent);
             } catch (error) {
                 let errorObj = {message:'Bad Request', errors:{...errors}}
                 for(let e of error.errors){

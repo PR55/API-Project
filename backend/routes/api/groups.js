@@ -629,19 +629,11 @@ router.post('/:groupId/membership', requireAuth,async (req,res) => {
             if(!checkMembrship){
                 try {
                     let newMembership;
-                    if(group.private){
-                        newMembership = await Member.create({
-                            groupId:group.id,
-                            memberId:user.id,
-                            status:"pending"
-                        }, {validate:true});
-                    }else{
-                        newMembership = await Member.create({
-                            groupId:group.id,
-                            memberId:user.id,
-                            status:"member"
-                        }, {validate:true});
-                    }
+                    newMembership = await Member.create({
+                        groupId:group.id,
+                        memberId:user.id,
+                        status:"pending"
+                    }, {validate:true});
                     await newMembership.save();
                     res.json({
                         memberId:newMembership.memberId,
@@ -652,7 +644,7 @@ router.post('/:groupId/membership', requireAuth,async (req,res) => {
                 }
             }else{
                 res.status(400);
-                if(group.private && checkMembrship.status === 'pending'){
+                if(checkMembrship.status === 'pending'){
                     res.json({message:"Membership has already been requested"})
                 } else{
                     res.json({message:"User is already a member of the group"})

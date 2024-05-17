@@ -36,9 +36,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         notEmpty:{
+          args:true,
           msg:'Street address is required'
         },
         notNull:{
+          args:true,
           msg:'Street address is required'
         }
       }
@@ -48,9 +50,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         notEmpty:{
+          args:true,
           msg:'City is required'
         },
         notNull:{
+          args:true,
           msg:'City is required'
         }
       }
@@ -60,9 +64,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         notEmpty:{
+          args:true,
           msg:'State is required'
         },
         notNull:{
+          args:true,
           msg:'State is required'
         }
       }

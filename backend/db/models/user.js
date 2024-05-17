@@ -31,14 +31,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull:false,
         validate:{
-          len:[3,50]
+          len:[3,50],
+          notEmpty:{
+            args:true,
+            msg:"First Name is required"
+          }
         }
       },
       lastName:{
         type: DataTypes.TEXT,
         allowNull:false,
         validate:{
-          len:[3,50]
+          len:[3,50],
+          notEmpty:{
+            args:true,
+            msg:"Last Name is required"
+          }
         }
       },
       username: {
@@ -60,7 +68,10 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           len: [3, 256],
-          isEmail: true
+          isEmail:{
+            args:true,
+            msg:"Invalid Email"
+          }
         }
       },
       hashedPassword: {
