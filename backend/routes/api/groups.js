@@ -30,6 +30,16 @@ router.get('/', async (req,res) => {
                 isPreview:true
             }
         })
+
+        holdA.numMembers = await Member.count({
+            where:{
+              groupId:holdA.id,
+              status:{[Op.in]:['member','co-host']}
+            }
+        });
+
+        holdA.numMembers += 1;
+
         if(image){
             holdA.previewImage = image.imageUrl;
         }else{
@@ -562,7 +572,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
 //cleared
 router.post('/:groupId/images', requireAuth, async (req,res) => {
 
-    let group = await Group.findByPk(req.params.groupId, {
+    let group = await Group.findByPk(parseInt(req.params.groupId), {
         include:{
             model:Image
         }
@@ -587,7 +597,8 @@ router.post('/:groupId/images', requireAuth, async (req,res) => {
         try {
             let newImage = await Image.create({
                 imageUrl:url,
-                isPreview:preview
+                isPreview:preview,
+                groupId: group.id
             }, {validate:true});
             await newImage.save();
             res.json({...newImage.toJSON()});
@@ -872,6 +883,9 @@ router.delete('/:groupId/membership/:memberId', requireAuth,async (req,res)=>{
                 res.status(404);
                 res.json({message:"No membership is held for the user with this group"});
             }
+        }else{
+            res.status(403);
+            res.json({message:"Must be organizer of group or referred user to remove from group"});
         }
     }else{
         res.status(404);
