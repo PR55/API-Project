@@ -393,9 +393,9 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
                 userId:user.id
             }
         });
-        const isAble = attendStatus.status === 'host' ||
+        const isAble = attendStatus ? attendStatus.status === 'host' ||
         attendStatus.status === 'co-host'||
-        attendStatus.status === 'attendee';
+        attendStatus.status === 'attendee': false;
         if(isAble){
             try {
                 if(preview === true){
@@ -437,7 +437,7 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
             }
         }else{
             res.status(400);
-            res.json({message});
+            res.json({message:'Unable to add image to event, not an Attendee, co-host, or host for the event'});
         }
 
     }else{
