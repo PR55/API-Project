@@ -147,6 +147,14 @@ router.get('/:groupId', async (req, res) => {
             }
         });
 
+        group.numMembers = await Member.count({
+            where:{
+              groupId:holdA.id,
+              status:{[Op.in]:['member','co-host']}
+            }
+        });
+        group.numMembers += 1;
+
         group.GroupImages = imagePreview;
 
 

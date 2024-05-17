@@ -14,11 +14,9 @@ const router = express.Router();
 
 const validateSignup = [
     check('firstName')
-      .exists({checkFalsy:true})
       .notEmpty({checkFalsy:true})
       .withMessage('First Name is required'),
     check('lastName')
-      .exists({checkFalsy:true})
       .notEmpty({checkFalsy:true})
       .withMessage('last Name is required'),
     check('email')
@@ -45,6 +43,38 @@ router.post('/', validateSignup,async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
     const hashedPassword = bcrypt.hashSync(password);
     try {
+
+      let searchForInstance = await User.findOne({
+        where:{
+          email
+        }
+      });
+
+      if(!searchForInstance){
+        searchForInstance = await User.findOne({
+          where:{
+            username
+          }
+        });
+      }else{
+        res.status(500);
+        return res.json({
+          "message": "User already exists",
+          "errors": {
+            "username": "User with that username already exists"
+          }
+        })
+      }
+
+      if(searchForInstance){
+        res.status(500);
+        return res.json({
+          "message": "User already exists",
+          "errors": {
+            "username": "User with that username already exists"
+          }
+        })
+      }
       const user = await User.create({ firstName, lastName, email, username, hashedPassword }, {validate:true});
       const safeUser = {
           id: user.id,
