@@ -368,11 +368,11 @@ router.post('/:groupId', requireAuth,async (req,res) => {
                         res.json(errorObj);
                 }
                 }else{
-                    res.status(400);
+                    res.status(403);
                     res.json({message:"Invalid membership level"});
                 }
             }else{
-                res.status(400);
+                res.status(403);
                 res.json({message:"User is not a member"});
             }
         }
@@ -436,7 +436,7 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
                 res.json(errorObj);
             }
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:'Unable to add image to event, not an Attendee, co-host, or host for the event'});
         }
 
@@ -457,11 +457,12 @@ router.post('/:eventId/attendees', requireAuth,async(req,res) => {
             }
         });
         if(attendance){
-            res.status(400)
             if(attendance.status === 'host'){
-                res.json({message:"User is the host of the event"});
+            res.status(403)
+            res.json({message:"User is the host of the event"});
             }else{
-                res.json({message:"Attendance has already been requested"});
+            res.status(400)
+            res.json({message:"Attendance has already been requested"});
             }
         }else{
             const attendInfo= {
@@ -535,7 +536,7 @@ router.patch('/:eventId', requireAuth ,async (req,res)=>{
                 res.json(errorObj);
             }
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:"User isn't the organizer or 'co-host' of the group"});
         }
 
@@ -621,7 +622,7 @@ router.patch('/:eventId/attendees', requireAuth,async (req,res) => {
                 res.json({message:"Attendance between the user and the event does not exist"});
             }
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:"Can only be modified by Organizer or co-host of the group"});
         }
     }else{
@@ -654,7 +655,7 @@ router.delete('/:eventId', requireAuth,async (req,res) => {
                 })
             }
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:"User is not a co-host or owner of group organizing this event"});
         }
     }else{
@@ -694,7 +695,7 @@ router.delete('/:eventId/attendees', requireAuth,async (req,res) => {
                 res.json({message:"Attendance between the user and the event does not exist"});
             }
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:"Can only be deleted by the organizer of the group or the user being deleted"});
         }
     }else{
@@ -736,7 +737,7 @@ router.delete('/:eventId/images', requireAuth,async (req,res) => {
                 res.json({message:"No images are associated with the event or searchId is out of range of known images"});
             }
         }else{
-            res.status(404);
+            res.status(403);
             res.json({message:"Neccessary role not assigned. Must be Organizer or Co-host of the main group"});
         }
 

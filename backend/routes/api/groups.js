@@ -308,7 +308,7 @@ router.post('/:groupId/members', requireAuth,async (req,res) => {
                 }
             }
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:"User is the organizer/owner of the group!"})
         }
     }else{
@@ -349,7 +349,7 @@ router.patch('/:groupId', requireAuth,async (req,res)=> {
                 res.status(404);
                 res.json({message:"Group couldn't be found"});
             }else{
-                res.status(404);
+                res.status(403);
                 res.json({message:"Not the owner of this group"});
             }
         }
@@ -397,7 +397,7 @@ router.patch("/:groupId/members", requireAuth,async (req,res) => {
                     res.json({message:"Membership between the user and the group does not exist"});
                 }
             }else{
-                res.status(404);
+                res.status(400);
                 res.json({
                     message:'Bad message',
                     errors:{
@@ -445,7 +445,7 @@ router.patch("/:groupId/members", requireAuth,async (req,res) => {
                     res.json({message:"Membership between the user and the group does not exist"});
                 }
             }else{
-                res.status(404);
+                res.status(400);
                 res.json({
                     message:'Bad message',
                     errors:{
@@ -454,7 +454,7 @@ router.patch("/:groupId/members", requireAuth,async (req,res) => {
                 });
             }
             }else{
-                res.status(400);
+                res.status(403);
                 res.json({message:'Invalid Request', errors:{user:"User is either not a co-host, organizer or is not a part of the group."}})
             }
         }
@@ -489,7 +489,7 @@ router.delete('/:groupId', requireAuth,async (req,res)=> {
             res.status(404);
             res.json({message:"Group couldn't be found"});
         }else{
-            res.status(404);
+            res.status(403);
             res.json({message:"Not the owner of this group"});
         }
     };
@@ -514,7 +514,7 @@ router.delete('/:groupId/members', requireAuth,async (req,res)=>{
                     await membership.destroy();
                     res.json({message:"Successfully deleted membership from group"});
                 } else{
-                    res.status(400);
+                    res.status(404);
                     res.json({message:"No membership is held for the user with this group"});
                 }
             }else{
@@ -532,7 +532,7 @@ router.delete('/:groupId/members', requireAuth,async (req,res)=>{
                 await membership.destroy();
                 res.json({message:"Successfully deleted membership from group"});
             } else{
-                res.status(400);
+                res.status(404);
                 res.json({message:"No membership is held for the user with this group"});
             }
         }
@@ -573,7 +573,7 @@ router.delete('/:groupId/images', requireAuth,async (req,res) => {
                 res.json({message:"No images are associated with the group or searchId is out of range of known images"});
             }
         }else{
-            res.status(404);
+            res.status(403);
             res.json({message:"Neccessary role not assigned. Must be Organizer or Co-host of the group"});
         }
 

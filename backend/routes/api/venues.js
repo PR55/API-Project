@@ -37,7 +37,7 @@ router.get('/:groupId', requireAuth,async (req,res) => {
 
             return res.json(groups);
         }else{
-            res.status(400);
+            res.status(403);
             res.json({message:"User must be the organizer or co-host to view this info"});
         }
     }else{
@@ -122,11 +122,11 @@ router.post('/:groupId', requireAuth, async (req,res) => {
                         res.json(errorObj);
                     }
                 }else{
-                    res.status(400);
-                    return res.json({message:"User does nto have the valid member level"});
+                    res.status(403);
+                    return res.json({message:"User does not have the valid member level"});
                 }
             }else{
-                res.status(400);
+                res.status(403);
                 return res.json({message:"User is not a member of this group"});
             }
         }
@@ -208,11 +208,11 @@ router.patch('/:venueId', requireAuth, async (req,res) => {
                         res.json(errorObj);
                     }
                 }else{
-                    res.status(400);
+                    res.status(403);
                     return res.json({message:"User does nto have the valid member level"});
                 }
             }else{
-                res.status(400);
+                res.status(403);
                 return res.json({message:"User is not a member of this group"});
             }
         }
