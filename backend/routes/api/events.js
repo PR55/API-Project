@@ -23,14 +23,16 @@ router.get('/', async (req,res) => {
     let {page, size} = req.query;
     page = parseInt(page);
     size = parseInt(size);
+    const errors = {};
 
-    if(!page || page < 0 || isNaN(page)) page = 1;
-    if(!size || size < 0 || isNaN(size)) size = 20;
+    if(page < 0){errors.page = "Page must be greater than or equal to 1"}
+    else if(!page || isNaN(page)){ page = 1;}
+    if(size < 0){errors.size = "Size must be greater than or equal to 1"}
+    else if(!size || isNaN(size)){ size = 20;}
 
     queryParams.limit = size;
     queryParams.offset = size * (page - 1);
 
-    const errors = {};
 
     const where = {};
 
