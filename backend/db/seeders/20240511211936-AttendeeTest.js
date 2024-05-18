@@ -10,39 +10,9 @@ const {Attendee} = require('../models')
 const attendees =[
   {
     eventId:1,
-    userId:3,
-    status:'pending'
-  },
-  {
-    eventId:1,
-    userId:2,
-    status:'attending'
-  },
-  {
-    eventId:1,
     userId:4,
     status:'host'
   },
-  {
-    eventId:1,
-    userId:5,
-    status:'attending'
-  },
-  {
-    eventId:1,
-    userId:6,
-    status:'attending'
-  },
-  {
-    eventId:1,
-    userId:7,
-    status:'attending'
-  },
-  {
-    eventId:1,
-    userId:8,
-    status:'pending'
-  }
 ];
 
 module.exports = {
