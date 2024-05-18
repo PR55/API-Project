@@ -477,7 +477,7 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
         if(isOwner || isCoHost){
             let {status} = req.body;
             let userd = parseInt(req.body.userId);
-            console.log(req.body, userId);
+            console.log(req.body, userd);
             const attendance = await Attendee.findOne({
                 where:{
                     userId:{
