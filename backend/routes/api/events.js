@@ -475,13 +475,17 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
         });
         const isCoHost = membership? membership.status === 'co-host':false
         if(isOwner || isCoHost){
-            let {userId, status} = req.body;
-            userId = parseInt(userId);
+            let {status} = req.body;
+            let userd = parseInt(req.body.userId);
             console.log(req.body, userId);
             const attendance = await Attendee.findOne({
                 where:{
-                    userId:user2.id,
-                    eventId:event.id
+                    userId:{
+                        [Op.eq]:userd
+                    },
+                    eventId:{
+                        [Op.eq]:event.id
+                    }
                 }
             });
             // console.log(attendance);
