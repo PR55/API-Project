@@ -185,28 +185,62 @@ router.get('/:groupId/members', async (req, res) => {
     }
     let Members = [];
     if(group){
-       if(user && group.organizerId === user.id){
-        let members = await Member.findAll({
-            include:{
-                model:User
-            },
-            attributes:['status'],
+       if(user){
+        let coMem = await Member.findOne({
             where:{
-                groupId:group.id
-            },
-            order:[
-                [User, 'id', 'ASC']
-            ]
-        });
-        for(let mem of members){
-            let holder = {
-                ...mem.User.toJSON()
-            };
-            holder.Membership = {
-                status:mem.status
+                memberId:user.id
             }
-            Members.push(holder);
+        });
+        let coCheck = coMem? coMem.status === 'co-host' :false;
+        if(group.organizerId === user.id ||coCheck){
+            let members = await Member.findAll({
+                include:{
+                    model:User
+                },
+                attributes:['status'],
+                where:{
+                    groupId:group.id
+                },
+                order:[
+                    [User, 'id', 'ASC']
+                ]
+            });
+            for(let mem of members){
+                let holder = {
+                    ...mem.User.toJSON()
+                };
+                holder.Membership = {
+                    status:mem.status
+                }
+                Members.push(holder);
+            }
+        }else{
+            let members = await Member.findAll({
+                include:{
+                    model:User
+                },
+                attributes:['status'],
+                where:{
+                    groupId:group.id,
+                    status:{
+                        [Op.in]:['member', 'co-host']
+                    }
+                },
+                order:[
+                    [User, 'id', 'ASC']
+                ]
+            });
+            for(let mem of members){
+                let holder = {
+                    ...mem.User.toJSON()
+                };
+                holder.Membership = {
+                    status:mem.status
+                }
+                Members.push(holder);
+            }
         }
+
        }else {
         let members = await Member.findAll({
             include:{
@@ -492,7 +526,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
                     }
 
                     if(Object.keys(errors).length){
-                        res.status(400);
+                        res.status(404);
                         return res.json({
                             message:"Bad Request",
                             errors
@@ -559,7 +593,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
                     }
 
                     if(Object.keys(errors).length){
-                        res.status(400);
+                        res.status(404);
                         return res.json({
                             message:"Bad Request",
                             errors
@@ -615,7 +649,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
             }
         }
     } else{
-        res.status(400);
+        res.status(404);
         res.json({message:"Group couldn't be found"});
     }
 });
@@ -636,6 +670,13 @@ router.post('/:groupId/images', requireAuth, async (req,res) => {
     const {url, preview} = req.body;
 
     if(group !== null){
+
+        const {user} = req;
+        if(user.id !== group.organizerId){
+            res.status(403);
+            return res.json({message:"Must be owner to change or add image to a group"})
+        }
+
         if(preview === true && group.GroupImages.length){
             let images = group.GroupImages;
 
@@ -780,6 +821,11 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                     let isMem = toPromote.status === 'member';
                     let isCo = toPromote.status === 'co-host';
                     if(((status === 'member' && (isPending||isCo)) || (status === 'co-host' && (isPending||isMem)))){
+
+                        if(status === 'co-host' && user.id != group.organizerId){
+                            res.status(403);
+                            return res.json({message:"Only owner can promote to co-host"});
+                        }
                         toPromote.status = status;
                         await toPromote.validate();
                         await toPromote.save();
@@ -799,7 +845,7 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                     res.json({message:"Membership between the user and the group does not exist"});
                 }
             }else{
-                res.status(400);
+                res.status(404);
                 res.json({
                     message:'Bad message',
                     errors:{
@@ -829,15 +875,18 @@ router.put("/:groupId/membership", requireAuth,async (req,res) => {
                         await toPromote.save();
                         res.json({id:toPromote.id,groupId:group.id, memberId:user.id, status:toPromote.status});
                     }else {
-                        res.status(400);
                         const errObj = {message:"Bad Message", errors:{}};
                         if(status === 'pending'){
+                            res.status(400);
                             errObj.errors['status'] = "Cannot set a user's status to pending";
                         }else if(status === 'co-host'){
+                            res.status(403);
                             errObj.errors['status'] = "Proper status not obtained, must be an organizer of a group to make some a co-host";
                         }else if(status === 'member'){
+                            res.status(400);
                             errObj.errors['status'] = "User is already a member, must be pending to change";
                         }else{
+                            res.status(400);
                             errObj.errors['status'] = "Invalid status has been sent. Can only be one of these types: ['member']";
                         }
                         res.json(errObj);
@@ -916,6 +965,18 @@ router.delete('/:groupId/membership/:memberId', requireAuth,async (req,res)=>{
     const {user} = req;
     let {memberId} = req.params;
     if(group){
+
+        try {
+            const checkExist = await User.findByPk(parseInt(memberId));
+            if(!checkExist){
+                res.status(404);
+                return res.json({message:"User couldn't be found"});
+            }
+        } catch (error) {
+            res.status(404);
+            return res.json({message:"User couldn't be found"});
+        }
+
         if(group.organizerId === user.id){
             const remUser = await User.findByPk(parseInt(memberId));
             if(remUser){

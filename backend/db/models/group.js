@@ -92,10 +92,13 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false,
       validate:{
-        textLength(value){
-          if(!value){
-            throw new Error('City is required');
-          }
+        notEmpty:{
+          args:true,
+          msg:'City is required'
+        },
+        notNull:{
+          args:true,
+          msg:'City is required'
         }
       }
     },
@@ -103,10 +106,13 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false,
       validate:{
-        textLength(value){
-          if(!value){
-            throw new Error('State is required');
-          }
+        notEmpty:{
+          args:true,
+          msg:'State is required'
+        },
+        notNull:{
+          args:true,
+          msg:'State is required'
         }
       }
     }

@@ -67,7 +67,7 @@ module.exports = {
     }
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete('GroupImages',{
-      eventId:{[Op.in]:ids},
+      groupId:{[Op.in]:ids},
       url:{[Op.in]:urls}
     },options);
   }

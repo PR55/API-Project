@@ -350,6 +350,21 @@ router.post('/:eventId/attendance', requireAuth,async(req,res) => {
             res.json({message:"Attendance has already been requested"});
             }
         }else{
+            const group = await Group.findByPk(event.groupId);
+            const membership = await Member.findOne(
+                {
+                    where:{
+                        memberId:user.id,
+                        status:{
+                            [Op.in]:['member', 'co-host']
+                        }
+                    }
+                }
+            );
+            if(!membership && user.id !== group.organizerId){
+                res.status(403);
+                return res.json({message:"Not a member of the group"})
+            }
             const attendInfo= {
                 userId:user.id,
                 eventId:event.id,
@@ -484,15 +499,13 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
                     eventId:event.id
                 }
             });
-            // console.log(attendance);
-            //fix error code by reducing test users, too many in attendance. Or check other tests leading up to it via save json on desktop
             if(attendance){
                 const countAttend = await Attendee.count({
                     where:{
                         eventId:event.id
                     }
                 });
-                if(status === 'attending' && countAttend < event.capacity){
+                if(status !== 'pending' && countAttend < event.capacity){
                     if(attendance.status === 'pending' || attendance.status === 'waitlist'){
                         attendance.status = status;
                         await attendance.validate();
@@ -500,7 +513,7 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
                         res.json({
                             id:attendance.id,
                             eventId:event.id,
-                            userId:attendance.id,
+                            userId:attendance.userId,
                             status:attendance.status
                         });
                     }else{
@@ -609,6 +622,17 @@ router.delete('/:eventId/attendance/:userId', requireAuth,async (req,res) => {
             }
         });
         let userId = parseInt(req.params.userId);
+        try {
+            const checkExist = await User.findByPk(userId);
+            if(!checkExist){
+                res.status(404)
+                return res.json({message:"User couldn't be found"});
+            }
+        } catch (error) {
+
+            res.status(404)
+            return res.json({message:"User couldn't be found"});
+        }
         const isUser = userId === user.id;
         if(isOwner || isUser){
             const attendance = await Attendee.findOne({
