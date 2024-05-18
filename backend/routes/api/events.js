@@ -272,7 +272,7 @@ router.post('/:eventId/images', requireAuth,async(req,res)=>{
         });
         const isAble = attendStatus ? attendStatus.status === 'host' ||
         attendStatus.status === 'co-host'||
-        attendStatus.status === 'attendee': false;
+        attendStatus.status === 'attending': false;
         if(isAble){
             try {
                 if(preview === true){
@@ -475,17 +475,13 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
         });
         const isCoHost = membership? membership.status === 'co-host':false
         if(isOwner || isCoHost){
-            let {status} = req.body;
-            let userd = parseInt(req.body.userId);
-            console.log(req.body, userd);
+            let {userId,status} = req.body;
+            userId = parseInt(userId);
+            // console.log(req.body, userd);
             const attendance = await Attendee.findOne({
                 where:{
-                    userId:{
-                        [Op.eq]:userd
-                    },
-                    eventId:{
-                        [Op.eq]:event.id
-                    }
+                    userId:userId,
+                    eventId:event.id
                 }
             });
             // console.log(attendance);
@@ -503,7 +499,7 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
                         res.json({
                             id:attendance.id,
                             eventId:event.id,
-                            userId:user.id,
+                            userId:attendance.id,
                             status:attendance.status
                         });
                     }else{
@@ -519,7 +515,7 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
                             res.json({
                                 id:attendance.id,
                                 eventId:event.id,
-                                userId:user.id,
+                                userId:attendance.id,
                                 status:attendance.status
                             });
                         }else{
