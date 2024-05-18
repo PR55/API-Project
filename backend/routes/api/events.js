@@ -476,15 +476,16 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
         const isCoHost = membership? membership.status === 'co-host':false
         if(isOwner || isCoHost){
             let {userId, status} = req.body;
-            // console.log(user);
+            userId = parseInt(userId);
+            console.log(req.body, userId);
             const attendance = await Attendee.findOne({
                 where:{
-                    userId:userId,
+                    userId:user2.id,
                     eventId:event.id
                 }
             });
             // console.log(attendance);
-            if(attendance && attendance.userId === userId){
+            if(attendance){
                 const countAttend = await Attendee.count({
                     where:{
                         eventId:event.id
