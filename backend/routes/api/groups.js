@@ -149,7 +149,7 @@ router.get('/:groupId', async (req, res) => {
 
         group.numMembers = await Member.count({
             where:{
-              groupId:holdA.id,
+              groupId:group.id,
               status:{[Op.in]:['member','co-host']}
             }
         });
