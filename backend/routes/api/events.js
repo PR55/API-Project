@@ -25,9 +25,9 @@ router.get('/', async (req,res) => {
     size = parseInt(size);
     const errors = {};
 
-    if(page < 0){errors.page = "Page must be greater than or equal to 1"}
+    if(page <= 0){errors.page = "Page must be greater than or equal to 1"}
     else if(!page || isNaN(page)){ page = 1;}
-    if(size < 0){errors.size = "Size must be greater than or equal to 1"}
+    if(size <= 0){errors.size = "Size must be greater than or equal to 1"}
     else if(!size || isNaN(size)){ size = 20;}
 
     queryParams.limit = size;
