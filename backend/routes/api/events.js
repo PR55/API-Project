@@ -398,7 +398,7 @@ router.put('/:eventId', requireAuth ,async (req,res)=>{
                     if(newVenue){
                         event.venueId = venueId;
                     }else{
-                        errors.venueId = "Venue does not exist"
+                        errors.venueId = "Venue couldn't be found"
                     }
                 }
                 if(name) event.name = name;
@@ -410,7 +410,7 @@ router.put('/:eventId', requireAuth ,async (req,res)=>{
                 if(endDate) event.endDate = endDate;
 
                 if(Object.keys(errors).length){
-                    res.status(400);
+                    res.status(404);
                     return res.json({
                         message:"Bad Request",
                         errors
@@ -476,13 +476,14 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
         const isCoHost = membership? membership.status === 'co-host':false
         if(isOwner || isCoHost){
             let {userId, status} = req.body;
-            userId = parseInt(userId);
+            console.log(user);
             const attendance = await Attendee.findOne({
                 where:{
                     userId:userId,
                     eventId:event.id
                 }
             });
+            console.log(attendance);
             if(attendance){
                 const countAttend = await Attendee.count({
                     where:{
