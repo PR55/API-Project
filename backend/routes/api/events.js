@@ -485,6 +485,7 @@ router.put('/:eventId/attendance', requireAuth,async (req,res) => {
                 }
             });
             // console.log(attendance);
+            //fix error code by reducing test users, too many in attendance. Or check other tests leading up to it via save json on desktop
             if(attendance){
                 const countAttend = await Attendee.count({
                     where:{
