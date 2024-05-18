@@ -50,6 +50,8 @@ router.post('/', validateSignup,async (req, res) => {
         }
       });
 
+      console.log(searchForInstance)
+
       if(!searchForInstance){
         searchForInstance = await User.findOne({
           where:{
@@ -65,6 +67,8 @@ router.post('/', validateSignup,async (req, res) => {
           }
         })
       }
+
+      console.log(searchForInstance)
 
       if(searchForInstance){
         res.status(500);

@@ -2060,4 +2060,5 @@ Return events filtered by query parameters.
       }
     }
     ```
-[db-schema]: images/schemaProto3.PNG
+[db-schema]:https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-schema.png
+[db-schema]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/meetup-db-diagram-info.txt
