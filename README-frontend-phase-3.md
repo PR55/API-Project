@@ -98,39 +98,47 @@ Your navigation should render an unordered list with a navigation link to the
 home page. It should only render navigation links to the login and signup routes
 when there is no session user; it should render a logout button when there is.
 
-Make a __ProfileButton.jsx__ file in the __Navigation__ folder. Create a React
+Make a __ProfileButton.jsx__ file in the `Navigation` folder. Create a React
 function component called `ProfileButton` that will render a generic user
-profile icon of your choice from [React icons].
+profile icon of your choice from [Font Awesome].
 
-Start by installing the React icons package in your __frontend__ folder:
+Follow the [instructions here for setting up Font Awesome][Font Awesome]. The
+easiest way to connect Font Awesome to your React application is by sharing your
+email and creating a new kit. The kit should let you copy an HTML `<script>`.
+Add this script to the `<head>` of your __frontend/index.html__ file.
 
-```sh
-npm install react-icons
+**If you don't want to sign up for Font Awesome** and are okay with using Font
+Awesome icons that may not be up to date, you can just add the following `link`
+to the `<head>` of your `frontend/public/index.html` file:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+  crossorigin="anonymous" />
 ```
 
-Now you can use any of the icons available in [React icons] simply by importing
-the icon (i.e., component) in the file where you want to render it. To change
-the size or color of the icon, wrap the icon component in a parent element like
-a `div`. Manipulating the `font-size` of the parent element changes the size of
-the icon. The color of the parent element will be the color of the icon. For
-example, to render a big orange carrot icon:
+Now you can use any of the [free icons available in Font Awesome][Choose a Font
+Awesome Icon] by adding the `<i>` element with the desired `className` to be
+rendered in a React component. To change the size or color of the icon, wrap the
+`<i>` element in a parent element like a `div`. Manipulating the `font-size` of
+the parent element changes the size of the icon. The color of the parent element
+will be the color of the icon. For example, to render a big orange [carrot
+icon]:
 
-```jsx
-import { FaCarrot } from 'react-icons/fa6';
-
-// ...
-
+```js
 const Carrot = () => {
   return (
     <div style={{ color: "orange", fontSize: "100px" }}>
-      <FaCarrot />
+      <i className="fas fa-carrot"></i>
     </div>
   );
 };
 ```
 
-[Choose an icon][React icons] that will represent the user profile button and
-render it in the `ProfileButton` component.
+[Choose an icon][Choose a Font Awesome Icon] that will represent the user
+profile button and render it in the `ProfileButton` component.
 
 Export the `ProfileButton` component as the default at the bottom of the file,
 and import it into the `Navigation` component. Render the `ProfileButton`
@@ -142,7 +150,7 @@ the `Navigation` component so that it shows up at the top of each page.
 Navigate to the [http://localhost:5173] and remove the `token` cookie if there
 is one. Refresh and see if there is a navigation bar with links to the login
 and signup pages. After logging in, the navigation bar should have the links
-to login and signup replaced with the React icons user icon.
+to login and signup replaced with the Font Awesome user icon.
 
 Here's an example of what __Navigation/Navigation.jsx__ could look like:
 
@@ -270,7 +278,6 @@ clicked. The `ProfileButton` component should look something like this:
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -284,7 +291,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className="profile-dropdown">
         <li>{user.username}</li>
@@ -342,6 +349,47 @@ function Navigation({ isLoaded }){
 export default Navigation;
 ```
 
+Here's an example of what __frontend/index.html__ could look like now with
+the recommended [Font Awesome] setup. Replace `{kit_id}` in the `script`'s `src`
+with the value of your Font Awesome starter kit's id.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/{kit_id}.js" crossorigin="anonymous"></script>
+    <title>Authenticate Me</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
+As an alternative, you could also use the somewhat outdated Font Awesome CSS
+stylesheet if you don't want to register for Font Awesome:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+    <title>Authenticate Me</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
 ### `Navigation` CSS
 
 Add a __Navigation.css__ file in your __Navigation__ folder. Import this CSS
@@ -385,7 +433,6 @@ will add a CSS style of `display: none` to the dropdown menu element.
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -402,7 +449,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={() => setShowMenu(!showMenu)}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName}>
         <li>{user.username}</li>
@@ -516,7 +563,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       {/* ... */}
     </>
@@ -564,7 +611,6 @@ reference to the dropdown menu JSX element.
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -599,7 +645,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}> {/* <-- Attach it here */}
         <li>{user.username}</li>
@@ -635,7 +681,6 @@ Now your dropdown menu should be fully functional and look something like this!
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -673,7 +718,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li>{user.username}</li>
@@ -693,7 +738,9 @@ export default ProfileButton;
 Congratulations on implementing an awesome dropdown menu all in React! **Make
 sure to commit your code!**
 
-[React icons]: https://react-icons.github.io/react-icons/
+[Font Awesome]: https://fontawesome.com/start
+[Choose a Font Awesome Icon]: https://fontawesome.com/icons?d=gallery&m=free
+[carrot icon]: https://fontawesome.com/icons/carrot?style=solid
 [`.contains`]: https://developer.mozilla.org/en-US/docs/Web/API/Node/contains
 [`useRef`]: https://react.dev/reference/react/useRef
 [http://localhost:5173]: http://localhost:5173

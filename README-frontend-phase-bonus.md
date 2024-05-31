@@ -72,7 +72,6 @@ Here's an example of what the `ProfileButton` component could look like now:
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
@@ -112,7 +111,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -175,14 +174,13 @@ into both `OpenModalButton` components as a callback function that will close
 the dropdown menu when invoked. Then for logout, you can use the same callback
 function to close the dropdown menu after the logout `dispatch`.
 
-Here's an example of what the `ProfileButton` component could look like now:
+Here's an example for how the `ProfileButton` component should look like now:
 
 ```jsx
 // frontend/src/components/Navigation/ProfileButton.jsx
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
@@ -225,7 +223,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -323,7 +321,6 @@ Here's an example of what the `ProfileButton` component could look like now:
 ```jsx
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
@@ -366,7 +363,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
