@@ -10,12 +10,12 @@ function OpenModalMenuItem({
 
   const onClick = () => {
     if (onModalClose) setOnModalClose(onModalClose);
-    setModalContent(modalComponent);
+    if(modalComponent)setModalContent(modalComponent);
     if (typeof onItemClick === "function") onItemClick();
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <p onClick={onClick}> {itemText}</p>
   );
 }
 

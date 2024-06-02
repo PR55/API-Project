@@ -4,8 +4,12 @@ import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation/Navigation-bonus';
+import HomePage from './components/HomePage/HomePage';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
+import Browser from './components/Browse/Browser';
+import EventView from './components/Events/EventView';
+import GrouptView from './components/Groups/GroupView';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -32,8 +36,24 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <HomePage/>
       },
+      {
+        path:'/groups',
+        element:<Browser/>
+      },
+      {
+        path:'/events',
+        element:<Browser/>
+      },
+      {
+        path:'/events/:eventId',
+        element:<EventView/>
+      },
+      {
+        path:'/groups/:groupId',
+        element:<GrouptView/>
+      }
       // {
       //   path: 'login',
       //   element: <LoginFormPage />

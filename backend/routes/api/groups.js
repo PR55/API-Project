@@ -40,6 +40,12 @@ router.get('/', async (req,res) => {
 
         holdA.numMembers += 1;
 
+        holdA.numEvents = await Event.count({
+            where:{
+                groupId:holdA.id
+            }
+        })
+
         if(image){
             holdA.previewImage = image.url;
         }else{

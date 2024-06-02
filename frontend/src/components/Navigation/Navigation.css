@@ -1,7 +1,43 @@
-.profile-dropdown {
+/* .profile-dropdown {
   position: absolute;
-}
+} */
 
 .hidden {
   display: none;
+}
+
+#navBar{
+  display: flex;
+  border: 3px solid;
+  border-color: black;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 100%;
+}
+
+#logo{
+  border: 3px solid;
+  width:100px
+}
+
+#userButton{
+  width:125px;
+  height:50px;
+}
+
+#authButtons{
+  display: flex;
+  align-content: center;
+  column-gap: 20px;
+  border: 3px solid;
+}
+
+#loggedButton{
+ display: flex;
+ flex-direction: column;
+}
+
+#loggedButton > button{
+  width:75px;
+  height: 35px;
 }
