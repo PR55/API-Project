@@ -18,11 +18,7 @@
     flex-direction: row;
     justify-content: center;
     align-content: center;
-}
-
-#mainInfo> img{
-    height:300px;
-    width:300px
+    padding: 10px 0px;
 }
 
 #groupViewBody{
@@ -37,4 +33,26 @@
 #groupViewBody > *{
     margin: 1% 10%;
     padding: 0;
+}
+
+#leftGroup{
+    display: flex;
+    flex-direction: column;
+}
+.imageHolder{
+    width:256px;
+}
+
+.imageHolder> img{
+    height:100%;
+}
+
+#rightGroup{
+    display: flex;
+    flex-direction: column;
+}
+
+#rightGroup > *{
+    padding: 0;
+    margin: 0;
 }
