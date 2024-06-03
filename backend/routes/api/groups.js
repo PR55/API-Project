@@ -31,6 +31,8 @@ router.get('/', async (req,res) => {
             }
         })
 
+        holdA.organizer = await User.findByPk(holdA.organizerId);
+
         holdA.numMembers = await Member.count({
             where:{
               groupId:holdA.id,
@@ -41,6 +43,18 @@ router.get('/', async (req,res) => {
         holdA.numMembers += 1;
 
         holdA.numEvents = await Event.count({
+            where:{
+                groupId:holdA.id
+            }
+        })
+
+        holdA.events = await Event.findAll({
+            where:{
+                groupId:holdA.id
+            }
+        })
+
+        holdA.venues = await Venue.findAll({
             where:{
                 groupId:holdA.id
             }

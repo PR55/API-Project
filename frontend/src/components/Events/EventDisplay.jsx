@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function EventDisplay({ event}) {
+export default function EventDisplay({event}) {
 
     const navigate = useNavigate();
 

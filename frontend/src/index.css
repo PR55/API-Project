@@ -1,20 +1,12 @@
 /* TODO: Add sitewide styles */
 body{
-    /* border: 3px solid; */
     /* width:99%; */
     margin: 0 ;
     padding: 0 ;
-    display: grid;
-    grid-template-areas:
-    'a a a a a a'
-    '. . b b . .'
-    '. . b b . .';
-    align-content: center;
-    justify-content: center;
+  background-color: azure;
 }
 
 .form{
-    grid-area: a;
     width: 100%;
     border: 10px rgb(91, 91, 91) solid;
     border-radius: 1em;
@@ -45,28 +37,4 @@ body{
 
 .link{
     text-decoration: underline;
-}
-
-#titleSplash{
-    display: flex;
-    align-content: center;
-    justify-content: space-around;
-}
-
-#navHolder{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.homeNavs{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-}
-.homeNavs > img{
-    height:256px;
-    width:256px;
 }

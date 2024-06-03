@@ -1,0 +1,40 @@
+#groupView{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    /* background-color: chartreuse; */
+}
+
+#groupView > *{
+    margin: 0 17.5%;
+    padding: 0;
+}
+
+#mainInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+#mainInfo> img{
+    height:300px;
+    width:300px
+}
+
+#groupViewBody{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: space-around; */
+    background-color: lightgray;
+}
+#groupViewBody > *{
+    margin: 1% 10%;
+    padding: 0;
+}

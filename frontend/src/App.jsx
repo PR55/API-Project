@@ -9,7 +9,7 @@ import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 import Browser from './components/Browse/Browser';
 import EventView from './components/Events/EventView';
-import GrouptView from './components/Groups/GroupView';
+import GroupIdPage from './components/Groups/GroupIdPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/groups/:groupId',
-        element:<GrouptView/>
+        element:<GroupIdPage/>
       }
       // {
       //   path: 'login',

@@ -5,6 +5,9 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import { FaUserCircle, FaChevronDown } from "react-icons/fa";
+import './Navigation.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -32,32 +35,39 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
+  const navigate = useNavigate();
+
   const logout = () => {
     // e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    navigate('/');
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  // const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
       {user ? (
-        <div id='loggedButton'>
-          <button onClick={toggleMenu}>
-            <i className="fas fa-user-circle" />
-          </button>
-            <div className={ulClassName} ref={ulRef}>
-            <OpenModalMenuItem
-            itemText={`Hello, ${user.username}`}
-            />
-            <OpenModalMenuItem
-            itemText={user.email}
-            />
-            <OpenModalButton
-              buttonText='Logout'
-              onButtonClick={logout}/>
+        <div id='loggedOptions'>
+          <Link>Make a new Group</Link>
+          <div id='loggedButton'>
+            <div className="dropdown">
+              <button onClick={toggleMenu}><FaUserCircle size={28} /><FaChevronDown size={28} /></button>
             </div>
+            <div className={showMenu ? "dropdown-content-show" : "dropdown-content-hide"}>
+              <OpenModalMenuItem
+                itemText={`Hello, ${user.username}`}
+              />
+              <OpenModalMenuItem
+                itemText={user.email}
+              />
+              <OpenModalButton
+                className='logOut'
+                buttonText='Logout'
+                onButtonClick={logout} />
+            </div>
+          </div>
         </div>
       ) : (
         <div id="authButtons">

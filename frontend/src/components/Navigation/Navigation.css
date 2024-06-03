@@ -7,17 +7,34 @@
 }
 
 #navBar{
+  grid-area: a;
   display: flex;
   border: 3px solid;
+  border-radius: 1rem;
   border-color: black;
   align-items: center;
   justify-content: space-between;
   flex: 0 0 100%;
+  margin: 1px 1px;
+  /* width: 0%; */
+  justify-self: left;
+  /* background-color: #268a53 */
+  background-color: cornsilk;
 }
 
 #logo{
-  border: 3px solid;
+  /* border: 3px solid; */
   width:100px
+}
+
+
+#loggedOptions{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  column-gap: 50px;
 }
 
 #userButton{
@@ -29,15 +46,59 @@
   display: flex;
   align-content: center;
   column-gap: 20px;
-  border: 3px solid;
+  /* border: 3px solid; */
 }
 
 #loggedButton{
- display: flex;
- flex-direction: column;
+ /* display: relative; */
+ /* border: 3px solid; */
 }
 
 #loggedButton > button{
   width:75px;
   height: 35px;
+}
+
+.dropdown > button{
+  border: none;
+  background-color: rgba(0,0,0,0);
+}
+
+.dropdown > button > *{
+  font-size: larger;
+}
+
+.dropdown-content-hide {
+  display: none;
+  position: absolute;
+  width: 100px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.7);
+}
+.dropdown-content-show  {
+  position: absolute;
+  width: 200px;
+  overflow: auto;
+  text-align: end;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  background-color: lightcyan;
+  display: block;
+  flex-direction: column;
+  justify-self: end;
+  top: auto;
+  right: 0px;
+  border: black 3px solid;
+  /* align-items: center; */
+  /* left: 0px; */
+  padding: 5px;
+  text-align: start;
+}
+.dropdown-content > * {
+  display: block;
+  color: #000000;
+  text-decoration: none;
+}
+.logOut {
+  color: #FFFFFF;
+  background-color: blue;
 }

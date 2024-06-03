@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton-bonus';
 import './Navigation.css';
 // import { newGroup } from '../../store/group';
+import { CiGlobe } from "react-icons/ci";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -31,7 +32,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <div id='navBar'>
-      <NavLink to="/"><img id="logo"src='../../../public/greetsFavicon1.png'></img></NavLink>
+      <NavLink to="/"><CiGlobe size={96}/></NavLink>
       {/* <button onClick={onClick}>Fire test event</button> */}
       {isLoaded && (
         <ProfileButton user={sessionUser} />
