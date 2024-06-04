@@ -6,7 +6,7 @@ import './Group.css';
 import GroupView from "./GroupView";
 import GroupViewBody from "./GroupViewBody";
 import { allGroupEvents } from "../../store/curGroup";
-import { allGroupMembers } from "../../store/members";
+// import { allGroupMembers } from "../../store/members";
 
 export default function GroupIdPage() {
     const { groupId } = useParams();

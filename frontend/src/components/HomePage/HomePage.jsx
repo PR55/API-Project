@@ -1,12 +1,24 @@
 import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import './HomePage.css';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdEmojiEvents, MdGroupAdd } from "react-icons/md";
 import { SiVfairs } from "react-icons/si";
+import { allEvents } from "../../store/event";
+import { allGroups } from "../../store/group";
+import { useEffect } from "react";
+
 
 export default function HomePage() {
     const sessionUser = useSelector(state => state.session.user);
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(allGroups());
+        dispatch(allEvents());
+        // console.log('Groups status= ', groups)
+    }, [])
 
     return (
         <div id='homePage'>

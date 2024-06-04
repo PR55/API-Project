@@ -16,7 +16,7 @@ export default function GroupsBrowser(){
 
     return (
         <div>
-            <p>Groups in Meetup</p>
+            <h2>Groups in Meetup</h2>
             { groups && Object.values(groups).map(group => {
                 return <GroupDisplay key={group.id} group={group}/>})}
         </div>

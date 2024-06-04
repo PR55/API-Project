@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
         through:'Members',
         foreignKey:'memberId',
         otherKey:'groupId',
-        onDelete:'CASCADE',
         hooks:true
       });
     }
@@ -41,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
   Group.init({
     organizerId:{
       type:DataTypes.INTEGER,
-      allowNull:false
+      allowNull:false,
+      onDelete:"CASCADE"
     },
     name:{
       type:DataTypes.STRING,

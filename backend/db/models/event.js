@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
         through:'Attendees',
         foreignKey:'userId',
         otherKey:'eventId',
-        onDelete:'CASCADE',
         hooks:true
       });
     }
@@ -35,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
   Event.init({
     groupId:{
       type:DataTypes.INTEGER,
-      allowNull:false
+      allowNull:false,
+      onDelete:"CASCADE"
     },
     venueId:{
       type:DataTypes.INTEGER,
@@ -46,7 +46,8 @@ module.exports = (sequelize, DataTypes) => {
             throw new Error('Not a valid value. Need venue for in person event');
           }
         }
-      }
+      },
+      onDelete:"CASCADE"
     },
     name:{
       type:DataTypes.TEXT,

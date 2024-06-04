@@ -21,8 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Member.init({
-    groupId: DataTypes.INTEGER,
-    memberId: DataTypes.INTEGER,
+    groupId: {
+      type:DataTypes.INTEGER,
+      onDelete:"CASCADE"
+    },
+    memberId: {
+     type:DataTypes.INTEGER,
+      onDelete:"CASCADE"
+    },
     status:{
       type: DataTypes.TEXT,
       allowNull:false,

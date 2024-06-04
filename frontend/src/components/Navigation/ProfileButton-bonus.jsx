@@ -7,7 +7,7 @@ import SignupFormModal from '../SignupFormModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import { FaUserCircle, FaChevronDown } from "react-icons/fa";
 import './Navigation.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -35,13 +35,10 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
-  const navigate = useNavigate();
-
   const logout = () => {
     // e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    navigate('/');
   };
 
   // const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

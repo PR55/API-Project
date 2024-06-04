@@ -25,29 +25,51 @@
     grid-area: c;
 } */
 
+#browsePage{
+    padding: 0%;
+    margin: 0 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+}
+
+#selectionHeader{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
 #groupDisplay{
     display: flex;
     margin: 25px;
     height:256px;
     width: 800px;
     border:5px solid;
+    padding: 1%;
+    border-radius: 2rem;
+}
+
+#groupDisplay:hover{
+    border-color: rgb(106, 64, 212);
 }
 
 #groupDisplay > img{
     height: 95%;
     width: 512px;
-    border:3px solid;
+    border:5px solid;
     border-radius: 1rem;
 }
 
 #groupDisplay:hover > img{
-    border-color: blue;
+    border-color: rgb(56, 56, 170);
 }
 
 #groupInfoDisplay{
     padding-left: 30px;
     text-wrap: wrap;
     width: 100%;
-    border:5px solid;
+    /* border:5px solid; */
     /* font-size: larger; */
 }

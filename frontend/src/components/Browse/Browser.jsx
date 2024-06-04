@@ -12,7 +12,7 @@ export default function Browser() {
 
     return (
         <div id='browsePage'>
-            <button
+            {/* <button
             id='eventButtonBrowse'
             onClick={() => {
                 if(url !== 'events'){
@@ -27,7 +27,25 @@ export default function Browser() {
                     navigate('/groups')
                 }
             }}
-            >Groups</button>
+            >Groups</button> */}
+            <div id='selectionHeader'>
+                <h2
+                onClick={() => {
+                    if(url !== 'events'){
+                        navigate('/events')
+                    }
+                }}
+                className={url === 'events'? "active neutral":"inactive clickable"}
+                >{'Events'}</h2>
+                <h2
+                onClick={() => {
+                    if(url !== 'groups'){
+                        navigate('/groups')
+                    }
+                }}
+                className={url === 'groups'? "active neutral":"inactive clickable"}
+                >{'Groups'}</h2>
+            </div>
             <div id='browseDisplay'>
                 {url === 'groups'?<GroupsBrowser />:<EventsBrowser/>}
             </div>

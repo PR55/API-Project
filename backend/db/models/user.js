@@ -8,14 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         through:models.Member,
         foreignKey:'memberId',
         otherKey:'groupId',
-        onDelete:'CASCADE',
         hooks:true
       });
       User.belongsToMany(models.Event,{
         through:'Attendees',
         foreignKey:'userId',
         otherKey:'eventId',
-        onDelete:'CASCADE',
         hooks:true
       });
       User.hasMany(models.Group,{
@@ -31,7 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull:false,
         validate:{
-          len:[3,50],
+          len:{
+            args:[3,50],
+            msg:'First name must be between 3 to 50 characters'
+          },
           notEmpty:{
             args:true,
             msg:"First Name is required"
@@ -42,7 +43,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull:false,
         validate:{
-          len:[3,50],
+          len:{
+            args:[3,50],
+            msg:'Last name must be between 3 to 50 characters'
+          },
           notEmpty:{
             args:true,
             msg:"Last Name is required"

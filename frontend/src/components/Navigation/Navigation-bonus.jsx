@@ -1,9 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton-bonus';
 import './Navigation.css';
+import { useEffect } from 'react';
 // import { newGroup } from '../../store/group';
-import { CiGlobe } from "react-icons/ci";
+// import { CiGlobe } from "react-icons/ci";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -30,9 +31,17 @@ function Navigation({ isLoaded }) {
 
   // }
 
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    navigate('/');
+  }, [sessionUser]);
+
   return (
     <div id='navBar'>
-      <NavLink to="/"><CiGlobe size={96}/></NavLink>
+      {/* <CiGlobe size={96}/> */}
+      {/* https://drive.google.com/file/d/1qzBcR0ASC74W7BkU8UK5u4RScQuourDx/view?usp=sharing */}
+      <NavLink to="/"><img src='https://drive.google.com/thumbnail?id=1qzBcR0ASC74W7BkU8UK5u4RScQuourDx' width={96} height={96}/></NavLink>
       {/* <button onClick={onClick}>Fire test event</button> */}
       {isLoaded && (
         <ProfileButton user={sessionUser} />

@@ -22,8 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Attendee.init({
-    eventId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
+    eventId: {
+      type:DataTypes.INTEGER,
+      onDelete:"CASCADE"
+    },
+    userId: {
+      type:DataTypes.INTEGER,
+      onDelete:"CASCADE"
+    },
     status: DataTypes.TEXT
   }, {
     sequelize,

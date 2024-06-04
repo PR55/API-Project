@@ -16,7 +16,7 @@ export default function EventsBrowser() {
 
     return (
         <div>
-            <p>Events in Meetup</p>
+            <h2>Events in Meetup</h2>
             {Object.values(events).map(event => {
                 return(
                     <EventDisplay key={event.id} event={event}/>

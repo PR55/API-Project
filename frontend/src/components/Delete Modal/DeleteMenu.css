@@ -1,0 +1,39 @@
+#deleteMenu{
+    display: flex;
+    flex-direction: column;
+    /* row-gap: 1px; */
+    align-items: center;
+    justify-content: end;
+    height: 300px;
+    width:400px;
+    border: 5px solid;
+    border-radius: 1.5em;
+    background-color: white;
+
+}
+
+#deleteMenu > h1{
+    margin:0;
+}
+
+#deleteMenu > h3{
+    margin-top:0;
+}
+
+#deleteMenu > div{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+    justify-content: end;
+    height: 100px;
+    width:150px;
+    padding-bottom: 10px;
+}
+
+#deleteMenu >div> button{
+    background-color: rgb(193, 0, 0);
+    color: white;
+    width:200px;
+    height: 50px;
+}

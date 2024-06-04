@@ -10,6 +10,7 @@ body{
     width: 100%;
     border: 10px rgb(91, 91, 91) solid;
     border-radius: 1em;
+    background-color: white;
 }
 
 .form > form{
@@ -37,4 +38,26 @@ body{
 
 .link{
     text-decoration: underline;
+}
+
+.inactive{
+    color: gray;
+    text-decoration: none;
+}
+
+.inactive:hover{
+    color: purple;
+}
+
+.active{
+    color: purple;
+    text-decoration: underline;
+}
+
+.clickable:hover{
+    cursor: pointer;
+}
+
+.neutral:hover{
+    cursor: default;
 }
