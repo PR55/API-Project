@@ -42,6 +42,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      private: {
+        type: Sequelize.BOOLEAN,
+        allowNull:false
+      },
       startDate: {
         type: Sequelize.DATE,
         allowNull: false

@@ -33,18 +33,18 @@ export default function HomePage() {
             <div id='navHolder'>
                 <div className="homeNavs">
                     <FaPeopleGroup size={256} color='green'/>
-                    <NavLink to='/groups#'>See all groups</NavLink>
+                    <NavLink to='/groups'>See all groups</NavLink>
                     <p>See all the groups we have to offer!</p>
                 </div>
                 <div className="homeNavs">
                     <MdEmojiEvents size={255} color="green"/>
-                    <NavLink to='/events#'>See all Events</NavLink>
+                    <NavLink to='/events'>See all Events</NavLink>
                     <p>See all the groups we have to offer!</p>
                 </div>
                 <div className="homeNavs">
                     <MdGroupAdd size={256} color={sessionUser ? "green": 'red'}/>
                     {sessionUser
-                        ? <Link>Make a group</Link>
+                        ? <Link to='/groups/create'>Make a group</Link>
                         : <Link className="disabled">Make a group</Link>
                     }
                     <p>See all the groups we have to offer!</p>

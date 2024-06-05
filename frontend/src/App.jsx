@@ -10,6 +10,10 @@ import { Modal } from './context/Modal';
 import Browser from './components/Browse/Browser';
 import EventView from './components/Events/EventView';
 import GroupIdPage from './components/Groups/GroupIdPage';
+import UpdateGroup from './components/Update/UpdateGroup';
+import CreateGroup from './components/Create/CreateGroup';
+import CreateEvent from './components/Create/CreateEvent';
+import EventIdPage from './components/Events/EventIdPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -48,11 +52,23 @@ const router = createBrowserRouter([
       },
       {
         path:'/events/:eventId',
-        element:<EventView/>
+        element:<EventIdPage/>
       },
       {
         path:'/groups/:groupId',
         element:<GroupIdPage/>
+      },
+      {
+        path:'/groups/:groupId/edit',
+        element:<UpdateGroup/>
+      },
+      {
+        path:'/groups/create',
+        element:<CreateGroup/>
+      },
+      {
+        path:'/groups/:groupId/event/new',
+        element:<CreateEvent/>
       }
       // {
       //   path: 'login',

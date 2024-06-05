@@ -1,13 +1,15 @@
-import {useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { newGroup } from '../../store/group';
-import { useNavigate } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
-// import { allGroups } from '../../store/group';
+import { useParams, useNavigate } from 'react-router-dom';
+import { allGroups, updateGroup } from '../../store/group';
+import './Update.css'
+export default function UpdateGroup() {
+    const { groupId } = useParams();
 
-
-export default function CreateGroup(){
     const user = useSelector(state => state.session.user);
+    const groups = useSelector(state => state.groups);
+    const group = groups[groupId] ? groups[groupId] : null;
+
     const dispatch = useDispatch();
 
     const [name, setName] = useState('');
@@ -18,14 +20,27 @@ export default function CreateGroup(){
     const [image, setImage] = useState('');
     const [errors, setErrors] = useState({});
 
+    useEffect(() => {
+        dispatch(allGroups());
+    }, [])
+
+    useEffect(()=>{
+        setName(group? group.name:'');
+        setLocation(group? `${group.city}, ${group.state}`:'');
+        setAbout(group? group.about:'');
+        setType(group? group.type:'');
+        setPrivacy(group? group.private:'');
+        setImage(group? group.previewImage:'');
+    }, [group])
 
     const navigate = useNavigate();
 
     const checkNavRequest = ()=> {
         if(!Object.keys(errors).length){
-            return false;
-        }else{
             return true;
+        }else{
+            console.log(errors);
+            return false;
         }
     }
 
@@ -46,10 +61,15 @@ export default function CreateGroup(){
         if(!type){
             errorObj.type = 'Group Type is required';
         }
-        if(!privacy){
-            errorObj.private = 'Visibility Type is required';
+        if(privacy === ''){
+            errorObj.privacy = 'Visibility Type is required';
         }
-        if(!image || (!image.endsWith('.png') && !image.endsWith('.jpg') && !image.endsWith('.jpeg'))){
+        if(!image){
+            errorObj.image = 'Link must end with .png, jpg, or .jpeg';
+        } else if((!image.endsWith('.png') && !image.endsWith('.jpg') && !image.endsWith('.jpeg'))){
+            console.log('png test: ', image.endsWith('.png' ));
+            console.log('jpg test: ', image.endsWith('.jpg' ));
+            console.log('jpeg test: ', image.endsWith('.jpeg' ));
             errorObj.image = 'Link must end with .png, jpg, or .jpeg';
         }
 
@@ -76,7 +96,7 @@ export default function CreateGroup(){
             imageUrl:image
         };
 
-        let id = await dispatch(newGroup(payload)).catch(async (res)=> {
+        let id = await dispatch(updateGroup(payload, groupId)).catch(async (res)=> {
             const data = await res.json();
             if(data?.errors){
                 setErrors(data.errors);
@@ -88,15 +108,14 @@ export default function CreateGroup(){
         }
     }
 
-
     return (
         <>
-        {
-            user
-            ?
-            <div id='formHolder'>
-                        <h4>CREATE A GROUP ON GREETS</h4>
-                        <h1>We&apos;ll walk you through a few steps to create your group&apos;s information</h1>
+            {
+                group && user && group.organizerId == user.id
+                    ?
+                    <div id='formHolder'>
+                        <h4>UPDATE YOUR GROUP&apos;S INFORMATION</h4>
+                        <h1>We&apos;ll walk you through a few steps to update your group &apos;s information</h1>
                         <hr />
                         <form
                         onSubmit={onSubmit}
@@ -153,7 +172,7 @@ export default function CreateGroup(){
                                         <option value={false}>Public</option>
                                         <option value={true}>Private</option>
                                     </select>
-                                    <p className='error'>{errors && errors.private}</p>
+                                    <p className='error'>{errors && errors.privacy}</p>
                                 </div>
                                 <div>
                                     <p>Please add an image url for your group below</p>
@@ -165,9 +184,8 @@ export default function CreateGroup(){
                             <button id='submit'>Update Group</button>
                         </form>
                     </div>
-            :
-            <h1>Please log in to make a group!</h1>
-        }
+                    : <h1>Group does not exist or you are not the owner of the group. Please return to the home page</h1>
+            }
         </>
     )
 }

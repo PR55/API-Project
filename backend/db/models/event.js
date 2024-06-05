@@ -101,6 +101,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    private:{
+     type:DataTypes.BOOLEAN,
+     allowNull:false
+    },
     startDate:{
       type:DataTypes.DATE,
       allowNull:false,

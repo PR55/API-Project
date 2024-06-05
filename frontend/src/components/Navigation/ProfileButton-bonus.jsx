@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
     <>
       {user ? (
         <div id='loggedOptions'>
-          <Link>Make a new Group</Link>
+          <Link to='/groups/create'>Make a new Group</Link>
           <div id='loggedButton'>
             <div className="dropdown">
               <button onClick={toggleMenu}><FaUserCircle size={28} /><FaChevronDown size={28} /></button>

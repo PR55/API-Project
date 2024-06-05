@@ -18,12 +18,12 @@ const loadGroups = (groups) =>{
 //     }
 // }
 
-const patchGroup = (group) =>{
-    return{
-        type:PATCH_GROUP,
-        group
-    }
-}
+// const patchGroup = (group) =>{
+//     return{
+//         type:PATCH_GROUP,
+//         group
+//     }
+// }
 
 const deleteGroup = (group) =>{
     return{
@@ -78,7 +78,7 @@ export const newGroup = (payload) => async (dispatch)=>{
         await dispatch(loadGroups(data2.Groups));
     }
 
-    return {response, responseImage};
+    return data.id;
 }
 
 export const updateGroup = (payload, id) => async(dispatch) => {
@@ -96,8 +96,8 @@ export const updateGroup = (payload, id) => async(dispatch) => {
     });
 
     const data=await response.json();
-    await dispatch(patchGroup(data));
-    return response;
+    await dispatch(allGroups());
+    return data.id;
 }
 
 export const removeGroup = (id) => async (dispatch) => {

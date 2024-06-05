@@ -18,7 +18,7 @@ export default function GroupDeleteModal({group, redirect}){
         e.preventDefault();
         closeModal();
         await dispatch(removeGroup(group.id));
-        redirect('/');
+        redirect('/groups');
     }
 
     const declineDelete = (e) => {

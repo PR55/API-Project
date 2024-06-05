@@ -536,7 +536,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
 
     if(group){
         if(group.organizerId === user.id){
-            const {venueId, name, type, capacity,price,description,startDate,endDate} = req.body;
+            const {venueId, private,name, type, capacity,price,description,startDate,endDate} = req.body;
                     try {
                     let venue;
                     if(venueId)venue = await Venue.findByPk(venueId);
@@ -561,6 +561,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
                         capacity,
                         price,
                         description,
+                        private,
                         startDate,
                         endDate
                     });
@@ -574,6 +575,7 @@ router.post('/:groupId/events', requireAuth,async (req,res) => {
                         capacity:newEvent.capacity,
                         price:newEvent.price,
                         description:newEvent.description,
+                        private:newEvent.private,
                         startDate:newEvent.startDate,
                         endDate:newEvent.startDate
                     };

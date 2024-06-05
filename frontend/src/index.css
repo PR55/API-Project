@@ -61,3 +61,17 @@ body{
 .neutral:hover{
     cursor: default;
 }
+
+.error{
+    color: red;
+    font-weight: bold;
+    font-size: large;
+}
+
+.currencyinput {
+    display: flex;
+    align-items: center;
+}
+.currencyinput input {
+    border: 1px inset #ccc;
+}
