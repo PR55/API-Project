@@ -6,16 +6,20 @@
   display: none;
 }
 
+#overallBar{
+  background-color: cornsilk;
+}
+
 #navBar{
   grid-area: a;
   display: flex;
-  border: 3px solid;
-  border-radius: 1rem;
-  border-color: black;
+  /* border: 3px solid; */
+  /* border-radius: 1rem; */
+  /* border-color: black; */
   align-items: center;
   justify-content: space-between;
   flex: 0 0 100%;
-  margin: 1px 1px;
+  /* margin: 1px 1px; */
   /* width: 0%; */
   justify-self: left;
   /* background-color: #268a53 */
@@ -47,11 +51,6 @@
   align-content: center;
   column-gap: 20px;
   /* border: 3px solid; */
-}
-
-#loggedButton{
- /* display: relative; */
- /* border: 3px solid; */
 }
 
 #loggedButton > button{
@@ -98,7 +97,13 @@
   color: #000000;
   text-decoration: none;
 }
-.logOut {
-  color: #FFFFFF;
-  background-color: blue;
+
+#modalOptions{
+  display: flex;
+  flex-direction: column;
+}
+
+#overallBar{
+  margin: 0;
+  padding: 0;
 }

@@ -14,16 +14,18 @@ export const allEvents = () => async (dispatch)=>{
 
     if(response.ok){
         const groups = await response.json();
+        // console.log(groups);
         dispatch(loadGroups(groups.Events));
         return groups;
     }
 }
 
 export const newEvent = (payload, id) => async (dispatch)=>{
-    const {name, about, type, capacity,price,privacy,startDate,endDate,imageUrl}=payload;
+    const {name, about, type, capacity,price,privacy,venueId,startDate,endDate,imageUrl}=payload;
     const response = await csrfFetch(`/api/groups/${parseInt(id)}/events`, {
         method:"POST",
         body:JSON.stringify({
+            venueId:parseInt(venueId),
             name,
             description:about,
             private:privacy,
@@ -37,7 +39,7 @@ export const newEvent = (payload, id) => async (dispatch)=>{
 
     const data = await response.json();
 
-    const responseImage = await csrfFetch(`/api/events/${parseInt(data.id)}/images`,{
+    await csrfFetch(`/api/events/${parseInt(data.id)}/images`,{
         method:"POST",
         body:JSON.stringify({
             url:imageUrl,
@@ -66,6 +68,7 @@ function eventReducer(state = {}, action) {
       case LOAD_EVENTS:{
         const newGroupState = {};
         for(let item of action.events){
+            // console.log(item);
             newGroupState[item.id] = item;
         }
         return newGroupState;

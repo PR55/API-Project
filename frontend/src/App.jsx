@@ -8,7 +8,6 @@ import HomePage from './components/HomePage/HomePage';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 import Browser from './components/Browse/Browser';
-import EventView from './components/Events/EventView';
 import GroupIdPage from './components/Groups/GroupIdPage';
 import UpdateGroup from './components/Update/UpdateGroup';
 import CreateGroup from './components/Create/CreateGroup';

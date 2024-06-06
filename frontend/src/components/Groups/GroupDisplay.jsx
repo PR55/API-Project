@@ -9,7 +9,9 @@ export default function GroupDisplay({ group }) {
         <div id='groupDisplay' onClick={()=>{
             navigate(`/groups/${parseInt(group.id)}`);
         }}>
-            <img src={group.previewImage} alt="" />
+            <div id='displayImageBrowse'>
+                <img src={group.previewImage} alt="" />
+            </div>
             <div id='groupInfoDisplay'>
                 <h3>{group.name}</h3>
                 <h4>{`${group.city}, ${group.state}`}</h4>

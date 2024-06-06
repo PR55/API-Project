@@ -35,6 +35,8 @@ export default function UpdateGroup() {
 
     const navigate = useNavigate();
 
+    if(!user) navigate('/');
+
     const checkNavRequest = ()=> {
         if(!Object.keys(errors).length){
             return true;

@@ -4,7 +4,7 @@ import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
 
-function SignupFormModal() {
+function SignupFormModal({redirect}) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -15,11 +15,12 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
+      let allow = true;
+      await dispatch(
         sessionActions.signup({
           email,
           username,
@@ -33,8 +34,10 @@ function SignupFormModal() {
           const data = await res.json();
           if (data?.errors) {
             setErrors(data.errors);
+            allow = false;
           }
         });
+        if(allow) redirect('/');
     }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -105,7 +108,17 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button
+        type="submit"
+        disabled={
+          !firstName ||
+          !lastName ||
+          !email ||
+          username.length < 4 ||
+          password.length < 6 ||
+          password !== confirmPassword
+        }
+        >Sign Up</button>
       </form>
     </div>
   );

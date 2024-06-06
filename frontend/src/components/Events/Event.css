@@ -1,6 +1,7 @@
+
 #eventHeader{
     background-color: lightblue;
-    padding-left: 200px;
+    padding-left: 25%;
     box-shadow: 0px 2px black;
 }
 
@@ -32,16 +33,17 @@
     flex-direction: column;
     text-wrap: wrap;
 }
-.imageHolder{
-    height: 256px;
-    width:500px;
+.imageHolderEvent{
+    height: 355px;
+    width:512px;
     border: 2px solid;
     border-radius: 1em;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
-.imageHolder> img{
+.imageHolderEvent> img{
     max-height:100%;
     max-width: 100%;
 }
@@ -49,9 +51,52 @@
 #rightGroup{
     display: flex;
     flex-direction: column;
+    /* background-color: white; */
+    /* padding: 10px; */
+    /* border:10px white solid; */
+    /* border-radius: 1rem; */
+    /* height: 100%; */
+    row-gap: 10px;
 }
 
 #rightGroup > *{
+    padding: 0;
+    margin: 0;
+    text-wrap: wrap;
+}
+
+#rightGroupTop{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 10px;
+    border:10px white solid;
+    border-radius: 1rem;
+    /* height: 100%; */
+}
+
+#rightGroupTop:hover{
+    cursor: pointer;
+    box-shadow: 5px 5px .5rem blue;
+}
+
+#rightGroupTop > *{
+    padding: 0;
+    margin: 0;
+    text-wrap: wrap;
+}
+
+#rightGroupBottom{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 10px;
+    border:10px white solid;
+    border-radius: 1rem;
+    /* height: 100%; */
+}
+
+#rightGroupBottom > *{
     padding: 0;
     margin: 0;
     text-wrap: wrap;
@@ -101,4 +146,195 @@
 .eventLink > *{
     margin: 0;
     padding: 0;
+}
+
+#eventDisplay{
+    display: flex;
+    margin: 25px;
+    height:350px;
+    width: 800px;
+    border:5px solid;
+    padding: 1%;
+    border-radius: 2rem;
+    box-shadow: 2px 2px 1rem black;
+    flex-direction: column;
+    row-gap: 25px;
+    overflow: hidden;
+    max-height: 400px;
+}
+
+#eventDisplay:hover{
+    border-color: rgb(106, 64, 212);
+    box-shadow: 2px 2px .9rem blue;
+    cursor: pointer;
+}
+
+#eventTop{
+    display: flex;
+    flex-direction: row;
+}
+#eventBottom{
+    text-wrap: wrap;
+    font-size: large;
+}
+
+#displayImageBrowse{
+    align-self: center;
+    width: 512px;
+    height: 200px;
+    border:5px solid;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(209, 209, 209, 0.579);
+}
+
+#displayImageBrowse > img{
+    max-height: 100%;
+    max-width:100%;
+}
+
+#eventDisplay:hover > #eventTop>#displayImageBrowse{
+    border-color: rgb(56, 56, 170);
+}
+
+body{
+    background-color: lightgray;
+}
+
+#eventPageBody{
+    background-color: lightgray;
+    padding: 0 25%;
+    padding-top: 5%;
+    margin: 0;
+}
+
+#mainInfoEvent{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    /* align-content: center; */
+    padding: 0;
+    margin: 0;
+    /* border: 2px solid; */
+    column-gap: 25px;
+    width: 100%;
+}
+
+#preview{
+    height:80px;
+    width:80px;
+    border:1px solid;
+    border-radius: .5rem;
+    background-color: rgb(233, 233, 233);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#preview > img{
+    height: 200px;
+    max-height: 150%;
+}
+
+#eventGroupPreview{
+    display: flex;
+    flex-direction: row;
+    width: 256px;
+    column-gap: 10px;
+}
+
+
+
+#timeDisplay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.time{
+    display: flex;
+    align-items: center;
+    /* border: 2px solid; */
+    column-gap: 10px;
+}
+
+.time > div{
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-size: small;
+}
+
+.time > div > *{
+    padding: 0;
+    margin: 0;
+}
+
+#timeHolder{
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid; */
+}
+
+#timeHolder > div{
+    padding: 0;
+    margin: 0;
+}
+
+#cost{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+}
+
+#eventButtons{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+#previewInfo{
+    text-wrap: wrap;
+}
+
+.eventManage{
+    width:160px;
+    height: 40px;
+    background-color: darkgray;
+    color: white;
+    border: 1px black solid;
+    box-shadow: 1px 1px black;
+}
+
+.eventManage:hover{
+    cursor: pointer;
+    background-color: rgb(144, 144, 144);
+}
+
+#eventJoin{
+    width:160px;
+    height: 40px;
+    background-color: red;
+    color: white;
+    border: 1px black solid;
+    box-shadow: 1px 1px black;
+}
+
+#eventJoin:enabled:hover{
+    background-color: rgb(206, 0, 0);
+    cursor: pointer;
+}
+
+#eventJoin:disabled{
+    background-color: rgba(255, 0, 0, 0.378);
+    color: rgba(255, 255, 255, 0.442);
 }

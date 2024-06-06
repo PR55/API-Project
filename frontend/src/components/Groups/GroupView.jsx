@@ -37,15 +37,14 @@ export default function GroupView({ group, user }) {
                             {
                                 user && (user.id === group.organizerId)
                                     ?
-                                    <div className='align'>
-                                        <button className='groupButton' onClick={()=>redirect(`/groups/${parseInt(group.id)}/event/new`)}>Create Event</button>
-                                        {/* To the events creation page, change url to be /groups/:id/events/new */}
+                                    <div className='alignRowMain'>
+                                        <button className='manageButton' onClick={()=>redirect(`/groups/${parseInt(group.id)}/event/new`)}>Create Event</button>
                                         {
                                             user.id === group.organizerId ?
-                                                <div className='align'>
-                                                    <button className='groupButton' onClick={() => redirect(`/groups/${parseInt(group.id)}/edit`)}>Update</button>
+                                                <div className='alignRow'>
+                                                    <button className='manageButton' onClick={() => redirect(`/groups/${parseInt(group.id)}/edit`)}>Update</button>
                                                     <OpenModalDeleteItem
-                                                        className='groupButton'
+                                                        className='manageButton'
                                                         id='groupDelete'
                                                         itemText='Delete'
                                                         modalComponent={<GroupDeleteModal group={group} redirect={redirect} />}
@@ -55,7 +54,15 @@ export default function GroupView({ group, user }) {
                                         }
                                     </div>
                                     :
-                                    <button disabled={!user} className='groupButton'>Join this Group</button>
+                                    !user
+                                    ? null
+                                    :
+                                    <button className='groupButton'
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        alert('Feature coming soon');
+                                    }}
+                                    >Join this Group</button>
                             }
                         </div>
                     </div>

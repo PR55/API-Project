@@ -8,18 +8,38 @@ export default function EventsBrowser() {
 
     const dispatch = useDispatch();
 
+
+
     useEffect(() => {
         dispatch(allEvents());
         // console.log('Groups status= ', groups)
     }, [])
 
+    const vals = Object.values(events);
+
+    vals.sort((a,b) => {
+        let start1 = new Date(a.startDate);
+        let start2 = new Date(b.startDate);
+        let today = new Date();
+
+        if(start1 < today || start1 < start2) return -1;
+        if(start1 > start2) return 1;
+        if (start1 === start2) return 0;
+    })
+
+    console.log(vals);
 
     return (
         <div>
             <h2>Events in Meetup</h2>
-            {Object.values(events).map(event => {
-                return(
-                    <EventDisplay key={event.id} event={event}/>
+            {vals.map(event => {
+                return (
+                    (
+                        <div key={event.id}>
+                            <EventDisplay  event={event} />
+                            <hr />
+                        </div>
+                    )
                 )
             })}
         </div>

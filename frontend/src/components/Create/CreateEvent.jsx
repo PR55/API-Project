@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { newEvent } from '../../store/event';
+import { allGroups } from '../../store/group';
+import { venuesForGroup } from '../../store/venue';
 // import { useParams } from 'react-router-dom';
 // import { allGroups } from '../../store/group';
 
@@ -11,7 +13,8 @@ export default function CreateEvent() {
 
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.groups);
-    const group = groups[groupId] ? groups[groupId]:null
+    const group = groups[groupId] ? groups[groupId]:null;
+    const venues = useSelector(state => state.groupVenue);
 
     const dispatch = useDispatch();
 
@@ -19,6 +22,7 @@ export default function CreateEvent() {
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
     const [type, setType] = useState('');
+    const [venue, setVenue] = useState('');
     const [capacity, setCapacity] = useState('');
     const [price, setPrice] = useState('');
     const [privacy, setPrivacy] = useState('');
@@ -30,14 +34,7 @@ export default function CreateEvent() {
 
     const navigate = useNavigate();
 
-    const checkNavRequest = () => {
-        if (!Object.keys(errors).length) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
+    if(!user) navigate('/');
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -82,6 +79,10 @@ export default function CreateEvent() {
             errorObj.startDate = 'End date must be after or on the current date'
         }
 
+        if(!venue){
+            errorObj.venueId = 'Please select a venue from the list';
+        }
+
         if (startDate > endDate) {
             errorObj.startDate = 'The start date must be before the end date';
             errorObj.endDate = 'The end date must be after the start date';
@@ -94,7 +95,10 @@ export default function CreateEvent() {
             setErrors({});
         }
 
+        let allow = true;
+
         const payload = {
+            venueId:venue,
             name,
             about,
             type,
@@ -110,10 +114,11 @@ export default function CreateEvent() {
             const data = await res.json();
             if (data?.errors) {
                 setErrors(data.errors);
+                allow = false;
             }
         })
 
-        if (await checkNavRequest()) {
+        if (allow) {
             navigate(`/events/${parseInt(id)}`);
         }
     }
@@ -128,6 +133,12 @@ export default function CreateEvent() {
 
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
+
+    useEffect(() => {
+        dispatch(allGroups());
+        dispatch(venuesForGroup(groupId));
+        console.log(venues);
+    }, [])
 
     return (
         <>
@@ -148,16 +159,46 @@ export default function CreateEvent() {
                             </div>
                             <div>
                                 <div>
-                                    <p>Is this an in person or online group?</p>
+                                    <h4>Is this an in person or online group?</h4>
                                     <select name="groupType" id="gType" value={type} onChange={e => setType(e.target.value)}>
                                         <option value="">(select one)</option>
                                         <option value="In person">In person</option>
                                         <option value="Online">Online</option>
                                     </select>
                                     <p className='error'>{errors && errors.type}</p>
+                                    {
+                                        type === 'In person'
+                                        ?
+                                        <div>
+                                            <select name="Venues" id="venueList" value={venue} onChange={e => setVenue(e.target.value)}>
+                                                <option value="">Select Venue</option>
+                                                {
+                                                    venues && Object.values(venues).map(venue => (
+                                                        <option key={venue.id} value={venue.id}>{`${venue.city}, ${venue.state}`}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                            <p className='error'>{errors && errors.venueId}</p>
+                                            <div>
+                                                {
+                                                    venue
+                                                    ?
+                                                    <>
+                                                        <h4>Selected Venue Info:</h4>
+                                                        <div>
+                                                            <p>Address: {`${venues[venue].address}, ${venues[venue].city}, ${venues[venue].state}`}</p>
+                                                            <p>Lat/Lng: {`${venues[venue].lat}, ${venues[venue].lng}`}</p>
+                                                        </div>
+                                                    </>
+                                                    :null
+                                                }
+                                            </div>
+                                        </div>
+                                        :null
+                                    }
                                 </div>
                                 <div>
-                                    <p>Is event public or private?</p>
+                                    <h4>Is event public or private?</h4>
                                     <select name="groupType" id="gType" value={privacy} onChange={e => setPrivacy(e.target.value)}>
                                         <option value="">(select one)</option>
                                         <option value={false}>Public</option>
@@ -167,7 +208,7 @@ export default function CreateEvent() {
                                 </div>
                                 <div>
                                     <p>Please set a price to attend the event</p>
-                                <span class="currencyinput xSmall">
+                                <span className="currencyinput xSmall">
                                     $<input
                                     type="number"
                                     name="currency"
@@ -178,7 +219,7 @@ export default function CreateEvent() {
                                 <p className='error'>{errors && errors.price}</p>
                                 </div>
                                 <div>
-                                    <p>Please set the capacity of attendees</p>
+                                    <h4>Please set the capacity of attendees</h4>
                                     <input
                                     type='number'
                                     value={capacity}
@@ -226,7 +267,7 @@ export default function CreateEvent() {
                                 <p className='error'>{errors && errors.description}</p>
                                 <hr />
                             </div>
-                            <button id='submit'>Update Group</button>
+                            <button id='submit'>Create Event</button>
                         </form>
                     </div>
                     :

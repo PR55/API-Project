@@ -17,8 +17,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-14T15:08Z',
+    endDate:'2027-05-15T15:08Z',
   },
   {
     groupId:1,
@@ -29,8 +29,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2025-05-14T14:08Z',
+    endDate:'2027-05-15T15:08Z',
   },
   {
     groupId:1,
@@ -41,8 +41,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:false,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-14T15:08Z',
+    endDate:'2027-05-15T15:08Z',
   },
   {
     groupId:5,
@@ -53,8 +53,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:false,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-14T15:08Z',
+    endDate:'2027-05-15T15:08Z',
   },
   {
     groupId:4,
@@ -65,8 +65,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-14T15:08Z',
+    endDate:'2027-05-15T15:08Z',
   },
   {
     groupId:3,
@@ -77,8 +77,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-14T19:08Z',
+    endDate:'2027-05-15T20:08Z',
   },
   {
     groupId:2,
@@ -89,8 +89,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:false,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-13T15:08Z',
+    endDate:'2027-05-14T15:08Z',
   },
   {
     groupId:2,
@@ -101,8 +101,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:false,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2028-05-14T15:08Z',
+    endDate:'2028-05-15T15:08Z',
   },
   {
     groupId:1,
@@ -113,8 +113,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2027-05-15T15:08Z',
+    endDate:'2027-05-16T15:08Z',
   },
   {
     groupId:1,
@@ -125,8 +125,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2025-05-13T15:08Z',
+    endDate:'2025-05-14T15:08Z',
   },
   {
     groupId:1,
@@ -137,8 +137,8 @@ const events = [
     price:14.99,
     description:'A fun day at the springs. Price is for food and gas.',
     private:true,
-    startDate:171999999048000,
-    endDate:191999999048000,
+    startDate:'2026-05-12T15:08Z',
+    endDate:'2026-05-13T15:08Z',
   }
 ];
 

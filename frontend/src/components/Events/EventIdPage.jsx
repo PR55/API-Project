@@ -1,8 +1,10 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { allEvents } from "../../store/event";
+import { allGroups } from "../../store/group";
 import { useParams} from "react-router-dom";
 import EventView from "./EventView";
+import EventViewBody from "./EventViewBody";
 import './Event.css'
 
 export default function EventIdPage() {
@@ -28,11 +30,12 @@ export default function EventIdPage() {
         // console.log('Groups status= ', groups)
     }, [eventId])
     return (
-        <div>
+        <div id='eventView'>
             {Object.keys(event).length && group.name
                 ?
                 <div id=''>
                     <EventView event = {event} group ={group} user={user}/>
+                    <EventViewBody event={event} group={group} user={user}/>
                 </div>
                 :
                 <div id='groupView'>

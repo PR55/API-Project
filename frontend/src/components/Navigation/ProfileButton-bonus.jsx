@@ -9,7 +9,7 @@ import { FaUserCircle, FaChevronDown } from "react-icons/fa";
 import './Navigation.css'
 import { Link} from 'react-router-dom';
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, redirect }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -29,8 +29,13 @@ function ProfileButton({ user }) {
     };
 
     document.addEventListener('click', closeMenu);
+    document.addEventListener('click', toggleMenu);
 
-    return () => document.removeEventListener('click', closeMenu);
+
+    return () => {
+      document.removeEventListener('click', closeMenu);
+      document.removeEventListener('click', toggleMenu)
+    };
   }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
@@ -39,6 +44,7 @@ function ProfileButton({ user }) {
     // e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    redirect('/');
   };
 
   // const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -54,15 +60,26 @@ function ProfileButton({ user }) {
             </div>
             <div className={showMenu ? "dropdown-content-show" : "dropdown-content-hide"}>
               <OpenModalMenuItem
-                itemText={`Hello, ${user.username}`}
+                itemText={`Hello, ${user.firstName}`}
               />
               <OpenModalMenuItem
                 itemText={user.email}
               />
+              <hr />
+              <div id='modalOptions'>
+              <OpenModalButton
+                className='logOut'
+                buttonText='View Groups'
+                onButtonClick={() => redirect('/groups')} />
+                <OpenModalButton
+                className='logOut'
+                buttonText='View Events'
+                onButtonClick={() => redirect('/events')} />
               <OpenModalButton
                 className='logOut'
                 buttonText='Logout'
                 onButtonClick={logout} />
+              </div>
             </div>
           </div>
         </div>
@@ -71,12 +88,12 @@ function ProfileButton({ user }) {
           <OpenModalMenuItem
             itemText="Log In"
             onItemClick={closeMenu}
-            modalComponent={<LoginFormModal />}
+            modalComponent={<LoginFormModal redirect={redirect}/>}
           />
           <OpenModalMenuItem
             itemText="Sign Up"
             onItemClick={closeMenu}
-            modalComponent={<SignupFormModal />}
+            modalComponent={<SignupFormModal redirect={redirect}/>}
           />
         </div>
       )}

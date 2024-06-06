@@ -34,6 +34,8 @@ router.get('/', async (req,res) => {
     queryParams.offset = size * (page - 1);
 
 
+
+
     const where = {};
 
     let {name, type, startDate} = req.query;
@@ -99,15 +101,25 @@ router.get('/', async (req,res) => {
             }
         });
 
+        let hostAttendee = await Attendee.findOne({
+            where:{
+                status:'host',
+                eventId:event.id
+            }
+        });
+
+        let host = hostAttendee ? await User.findByPk(hostAttendee.userId): null;
+
         let holdA = {
             id: event.id,
             groupId:event.groupId,
             venueId:venue ? venue.id:null,
             name:event.name,
-            about:event.description,
+            description:event.description,
             type:event.type,
             startDate:event.startDate,
             endDate:event.endDate,
+            host,
             numAttending,
             previewImage: img ?img.url:null,
             Group:group,

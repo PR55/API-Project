@@ -31,9 +31,26 @@
     padding-bottom: 10px;
 }
 
-#deleteMenu >div> button{
-    background-color: rgb(193, 0, 0);
+.confirm{
+    background-color: red;
     color: white;
     width:200px;
     height: 50px;
+}
+
+.confirm:hover{
+    background-color: rgb(193, 0, 0);
+    cursor: pointer;
+}
+
+.decline{
+    background-color: darkgray;
+    color: white;
+    width:200px;
+    height: 50px;
+}
+
+.decline:hover{
+    background-color: rgb(130, 130, 130);
+    cursor: pointer;
 }

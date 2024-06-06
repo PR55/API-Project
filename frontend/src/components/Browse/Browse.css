@@ -44,25 +44,49 @@
 #groupDisplay{
     display: flex;
     margin: 25px;
-    height:256px;
+    height:300px;
     width: 800px;
     border:5px solid;
     padding: 1%;
     border-radius: 2rem;
+    box-shadow: 2px 2px 1rem black;
 }
 
 #groupDisplay:hover{
     border-color: rgb(106, 64, 212);
+    box-shadow: 2px 2px .9rem blue;
+    cursor: pointer;
 }
 
-#groupDisplay > img{
-    height: 95%;
+#groupDisplay:active{
+    box-shadow: none;
+}
+
+#displayImageBrowse{
+    align-self: center;
+    width: 512px;
+    height: 256px;
+    border:5px solid;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#displayImageBrowse > img{
+    max-height: 100%;
+    max-width:100%;
+}
+
+/* #groupDisplay > img{
+    height: 100%;
     width: 512px;
     border:5px solid;
     border-radius: 1rem;
-}
+} */
 
-#groupDisplay:hover > img{
+#groupDisplay:hover > #displayImageBrowse{
     border-color: rgb(56, 56, 170);
 }
 

@@ -378,6 +378,7 @@ router.get('/:groupId/events', async(req,res) => {
                 venueId:venue ? venue.id:null,
                 name:event.name,
                 type:event.type,
+                description:event.description,
                 startDate:event.startDate,
                 endDate:event.endDate,
                 numAttending,

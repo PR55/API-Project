@@ -5,13 +5,15 @@ import groupReducer from './group';
 import eventReducer from './event';
 import curGroupEventsReducer from './curGroup';
 import curGroupMemberssReducer from './members';
+import venueReducer from './venue';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   groups:groupReducer,
   events:eventReducer,
   groupEvents:curGroupEventsReducer,
-  groupMembers:curGroupMemberssReducer
+  groupMembers:curGroupMemberssReducer,
+  groupVenue:venueReducer
 });
 
 let enhancer;

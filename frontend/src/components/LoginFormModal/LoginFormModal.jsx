@@ -4,25 +4,44 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
 
-function LoginFormModal() {
+function LoginFormModal({redirect}) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+    let allow = true;
+    await dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
           setErrors(data.errors);
+          allow = false;
         }
       });
+      if(allow) redirect('/');
   };
+
+  const demoUserLogin = async (e) => {
+    e.preventDefault();
+    setErrors({});
+    let allow = true;
+    await dispatch(sessionActions.login({ credential:'Demo-lition', password:'password' }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+          allow = false;
+        }
+      });
+      if(allow) redirect('/');
+  }
 
   return (
     <div className='form'>
@@ -47,8 +66,9 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={credential.length < 4 || password.length < 6}>Log In</button>
       </form>
+      <button onClick={demoUserLogin}>Log in demo user</button>
     </div>
   );
 }

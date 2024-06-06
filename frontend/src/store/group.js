@@ -60,7 +60,7 @@ export const newGroup = (payload) => async (dispatch)=>{
 
     // console.log(data);
 
-    const responseImage = await csrfFetch(`/api/groups/${data.id}/images`,{
+    await csrfFetch(`/api/groups/${data.id}/images`,{
         method:"POST",
         body:JSON.stringify({
             url:imageUrl,

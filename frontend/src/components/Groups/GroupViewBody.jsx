@@ -11,7 +11,7 @@ export default function GroupViewBody({ group, events }) {
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [pastEvents, setPastEvents] = useState([]);
 
-    function organizeDates() {
+    async function organizeDates() {
         const todaysDate = new Date();
 
         let pastArr = [];
@@ -25,6 +25,22 @@ export default function GroupViewBody({ group, events }) {
                 pastArr.push(event);
             }
         }
+
+        await futureArr.sort((a,b) => {
+            let date1 = new Date(a.startDate);
+            let date2 = new Date(b.startDate);
+            if(date1 > date2) return 1;
+            if(date1 < date2) return -1;
+            if(date1 == date2) return 0;
+        })
+
+        await pastArr.sort((a,b) => {
+            let date1 = new Date(a.endDate);
+            let date2 = new Date(b.endDate);
+            if(date1 > date2) return 1;
+            if(date1 < date2) return -1;
+            if(date1 == date2) return 0;
+        })
 
         setUpcomingEvents(futureArr);
         setPastEvents(pastArr);

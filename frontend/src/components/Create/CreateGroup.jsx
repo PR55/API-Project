@@ -18,8 +18,9 @@ export default function CreateGroup(){
     const [image, setImage] = useState('');
     const [errors, setErrors] = useState({});
 
-
     const navigate = useNavigate();
+
+    if(!user) navigate('/');
 
     const checkNavRequest = ()=> {
         if(!Object.keys(errors).length){

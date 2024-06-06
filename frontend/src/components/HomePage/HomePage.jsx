@@ -30,6 +30,10 @@ export default function HomePage() {
                 </div>
                 <SiVfairs size={250}/>
             </div>
+            <div id = 'sectionTwo'>
+                <h2>How Greets Works</h2>
+                <h3>Join a group in order to join their events! Connect with others in your local area!</h3>
+            </div>
             <div id='navHolder'>
                 <div className="homeNavs">
                     <FaPeopleGroup size={256} color='green'/>
@@ -38,7 +42,7 @@ export default function HomePage() {
                 </div>
                 <div className="homeNavs">
                     <MdEmojiEvents size={255} color="green"/>
-                    <NavLink to='/events'>See all Events</NavLink>
+                    <NavLink to='/events'>Find an Event</NavLink>
                     <p>See all the groups we have to offer!</p>
                 </div>
                 <div className="homeNavs">

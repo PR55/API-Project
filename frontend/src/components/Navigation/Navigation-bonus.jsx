@@ -2,7 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton-bonus';
 import './Navigation.css';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+// import { login, logout, signup } from '../../store/session';
 // import { newGroup } from '../../store/group';
 // import { CiGlobe } from "react-icons/ci";
 
@@ -33,19 +34,22 @@ function Navigation({ isLoaded }) {
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    navigate('/');
-  }, [sessionUser]);
+  // useEffect(()=>{
+  //   navigate('/');
+  // }, [logout,login,signup]);
 
   return (
-    <div id='navBar'>
+    <div id='overallBar'>
+      <div id='navBar'>
       {/* <CiGlobe size={96}/> */}
       {/* https://drive.google.com/file/d/1qzBcR0ASC74W7BkU8UK5u4RScQuourDx/view?usp=sharing */}
       <NavLink to="/"><img src='https://drive.google.com/thumbnail?id=1qzBcR0ASC74W7BkU8UK5u4RScQuourDx' width={96} height={96}/></NavLink>
       {/* <button onClick={onClick}>Fire test event</button> */}
       {isLoaded && (
-        <ProfileButton user={sessionUser} />
+        <ProfileButton user={sessionUser} redirect={navigate}/>
       )}
+    </div>
+    <hr id='navHR'/>
     </div>
   );
 }
