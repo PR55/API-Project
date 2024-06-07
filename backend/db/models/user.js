@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
           len: [3, 256],
           isEmail:{
             args:true,
-            msg:"Invalid Email"
+            msg:"Please provide a valid email"
           }
         }
       },

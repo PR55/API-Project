@@ -117,6 +117,7 @@ router.get('/', async (req,res) => {
             name:event.name,
             description:event.description,
             type:event.type,
+            price:event.price,
             startDate:event.startDate,
             endDate:event.endDate,
             host,

@@ -34,10 +34,12 @@ function SignupFormModal({redirect}) {
           const data = await res.json();
           if (data?.errors) {
             setErrors(data.errors);
+            console.log(data.errors);
             allow = false;
           }
         });
         if(allow) redirect('/');
+        return;
     }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -115,8 +117,7 @@ function SignupFormModal({redirect}) {
           !lastName ||
           !email ||
           username.length < 4 ||
-          password.length < 6 ||
-          password !== confirmPassword
+          password.length < 6
         }
         >Sign Up</button>
       </form>

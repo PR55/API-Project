@@ -29,12 +29,12 @@ function ProfileButton({ user, redirect }) {
     };
 
     document.addEventListener('click', closeMenu);
-    document.addEventListener('click', toggleMenu);
+    // document.addEventListener('click', toggleMenu);
 
 
     return () => {
       document.removeEventListener('click', closeMenu);
-      document.removeEventListener('click', toggleMenu)
+      // document.removeEventListener('click', toggleMenu)
     };
   }, [showMenu]);
 

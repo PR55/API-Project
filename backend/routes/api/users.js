@@ -59,13 +59,30 @@ router.post('/', validateSignup,async (req, res) => {
           }
         });
       }else{
-        res.status(500);
+        searchForInstance = await User.findOne({
+          where:{
+            username
+          }
+        });
+        if(searchForInstance){
+          res.status(500);
         return res.json({
           "message": "User already exists",
           "errors": {
-            "username": "User with that email already exists"
+            "email": "User with that email already exists",
+            "username":"User with that username already exists"
           }
         })
+        }else{
+          res.status(500);
+        return res.json({
+          "message": "User already exists",
+          "errors": {
+            "email": "User with that email already exists"
+          }
+        })
+        }
+
       }
 
       console.log(searchForInstance)
