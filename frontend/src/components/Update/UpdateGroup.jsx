@@ -37,19 +37,11 @@ export default function UpdateGroup() {
 
     if(!user) navigate('/');
 
-    const checkNavRequest = ()=> {
-        if(!Object.keys(errors).length){
-            return true;
-        }else{
-            console.log(errors);
-            return false;
-        }
-    }
-
     const onSubmit = async (e) => {
         e.preventDefault();
 
         let errorObj = {};
+        let allow = true;
 
         if(!name.length){
             errorObj.name = 'Name is required';
@@ -102,10 +94,11 @@ export default function UpdateGroup() {
             const data = await res.json();
             if(data?.errors){
                 setErrors(data.errors);
+                allow = false;
             }
         })
 
-        if(await checkNavRequest()){
+        if(allow){
             navigate(`/groups/${parseInt(id)}`);
         }
     }

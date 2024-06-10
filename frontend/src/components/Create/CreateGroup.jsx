@@ -22,16 +22,10 @@ export default function CreateGroup(){
 
     if(!user) navigate('/');
 
-    const checkNavRequest = ()=> {
-        if(!Object.keys(errors).length){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        let allow = true;
 
         let errorObj = {};
 
@@ -81,10 +75,11 @@ export default function CreateGroup(){
             const data = await res.json();
             if(data?.errors){
                 setErrors(data.errors);
+                allow = false;
             }
         })
 
-        if(await checkNavRequest()){
+        if(allow){
             navigate(`/groups/${parseInt(id)}`);
         }
     }
