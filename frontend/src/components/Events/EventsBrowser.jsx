@@ -22,8 +22,8 @@ export default function EventsBrowser() {
         let start2 = new Date(b.startDate);
         let today = new Date();
 
-        if(start1 < today || start1 < start2) return -1;
-        if(start1 > start2) return 1;
+        if(start1 < today || start1 < start2) return 1;
+        if(start1 > start2) return -1;
         if (start1 === start2) return 0;
     })
 

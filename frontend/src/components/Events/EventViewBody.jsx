@@ -35,7 +35,7 @@ export default function EventViewBody({ group, event, user }) {
                                         <div className="time">
                                             START
                                             <div>
-                                                <p>{`${startDate.getFullYear()}/${startDate.getMonth()}/${startDate.getDate()}`}</p>
+                                                <p>{`${startDate.getFullYear()}/${startDate.getMonth() + 1}/${startDate.getDate()}`}</p>
                                                 <LuDot />
                                                 <p>{`${startDate.getHours()}:${startDate.getMinutes()}`}</p>
                                             </div>
@@ -43,7 +43,7 @@ export default function EventViewBody({ group, event, user }) {
                                         <div className="time">
                                             END
                                             <div>
-                                                <p>{`${endDate.getFullYear()}/${endDate.getMonth()}/${endDate.getDate()}`}</p>
+                                                <p>{`${endDate.getFullYear()}/${endDate.getMonth() + 1}/${endDate.getDate()}`}</p>
                                                 <LuDot />
                                                 <p>{`${endDate.getHours()}:${endDate.getMinutes()}`}</p>
                                             </div>

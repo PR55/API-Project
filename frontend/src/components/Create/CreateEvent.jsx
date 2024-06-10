@@ -76,7 +76,7 @@ export default function CreateEvent() {
             errorObj.startDate = 'Start date must be after or on the current date'
         }
         if(endDate < today){
-            errorObj.startDate = 'End date must be after or on the current date'
+            errorObj.endDate = 'End date must be after or on the current date'
         }
 
         if(type === 'In person' && !venue){

@@ -29,8 +29,8 @@ export default function GroupViewBody({ group, events }) {
         await futureArr.sort((a,b) => {
             let date1 = new Date(a.startDate);
             let date2 = new Date(b.startDate);
-            if(date1 > date2) return 1;
-            if(date1 < date2) return -1;
+            if(date1 > date2) return -1;
+            if(date1 < date2) return 1;
             if(date1 == date2) return 0;
         })
 
