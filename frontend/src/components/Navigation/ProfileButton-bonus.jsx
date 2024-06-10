@@ -23,6 +23,7 @@ function ProfileButton({ user, redirect }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
+      e.stopPropagation();
       if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }

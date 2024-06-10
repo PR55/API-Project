@@ -99,7 +99,7 @@ router.post('/', validateSignup,async (req, res) => {
       const user = await User.create({ firstName, lastName, email, username, hashedPassword }, {validate:true});
       const safeUser = {
           id: user.id,
-          fistName:user.firstName,
+          firstName:user.firstName,
           lastName:user.lastName,
           email: user.email,
           username: user.username,

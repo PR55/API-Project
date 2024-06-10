@@ -163,7 +163,7 @@ export default function CreateGroup(){
                                 </div>
                                 <hr />
                             </div>
-                            <button id='submit'>Update Group</button>
+                            <button id='submit'>Create Group</button>
                         </form>
                     </div>
             :

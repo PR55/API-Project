@@ -108,28 +108,28 @@ module.exports = (sequelize, DataTypes) => {
     startDate:{
       type:DataTypes.DATE,
       allowNull:false,
-      validate:{
-        checkCurrent(value){
-          let expectedDate = new Date(value);
-          let curDate = new Date();
-          if(expectedDate < curDate){
-            throw new Error("Start date must be in the future");
-          }
-        }
-      }
+      // validate:{
+      //   checkCurrent(value){
+      //     let expectedDate = new Date(value);
+      //     let curDate = new Date();
+      //     if(expectedDate < curDate){
+      //       throw new Error("Start date must be in the future");
+      //     }
+      //   }
+      // }
     },
     endDate:{
       type:DataTypes.DATE,
       allowNull:false,
-      validate:{
-        checkCurrent(value){
-          let expDate = new Date(value);
-          let starDate = new Date(this.startDate);
-          if(expDate < starDate){
-            throw new Error("End date is less than start date");
-          }
-        }
-      }
+      // validate:{
+      //   checkCurrent(value){
+      //     let expDate = new Date(value);
+      //     let starDate = new Date(this.startDate);
+      //     if(expDate < starDate){
+      //       throw new Error("End date is less than start date");
+      //     }
+      //   }
+      // }
     }
   }, {
     sequelize,

@@ -79,7 +79,7 @@ export default function CreateEvent() {
             errorObj.startDate = 'End date must be after or on the current date'
         }
 
-        if(!venue){
+        if(type === 'In person' && !venue){
             errorObj.venueId = 'Please select a venue from the list';
         }
 
