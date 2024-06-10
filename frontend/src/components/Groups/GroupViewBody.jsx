@@ -37,8 +37,8 @@ export default function GroupViewBody({ group, events }) {
         await pastArr.sort((a,b) => {
             let date1 = new Date(a.endDate);
             let date2 = new Date(b.endDate);
-            if(date1 > date2) return 1;
-            if(date1 < date2) return -1;
+            if(date1 > date2) return -1;
+            if(date1 < date2) return 1;
             if(date1 == date2) return 0;
         })
 
