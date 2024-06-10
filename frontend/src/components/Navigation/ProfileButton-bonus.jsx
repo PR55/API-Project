@@ -71,11 +71,17 @@ function ProfileButton({ user, redirect }) {
               <OpenModalButton
                 className='logOut'
                 buttonText='View Groups'
-                onButtonClick={() => redirect('/groups')} />
+                onButtonClick={() => {
+                  closeMenu();
+                  redirect('/groups')
+                }} />
                 <OpenModalButton
                 className='logOut'
                 buttonText='View Events'
-                onButtonClick={() => redirect('/events')} />
+                onButtonClick={() => {
+                  closeMenu();
+                  redirect('/events')
+                }} />
               <OpenModalButton
                 className='logOut'
                 buttonText='Logout'
