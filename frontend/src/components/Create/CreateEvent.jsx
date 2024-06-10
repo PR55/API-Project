@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { newEvent } from '../../store/event';
 import { allGroups } from '../../store/group';
 import { venuesForGroup } from '../../store/venue';
@@ -273,6 +273,7 @@ export default function CreateEvent() {
                     :
                     <h1>Please log in to make a group!</h1>
             }
+            <Outlet/>
         </>
     )
 }

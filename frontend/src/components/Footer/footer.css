@@ -1,0 +1,25 @@
+#footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: antiquewhite;
+    border-top: 1px solid;
+}
+
+#externalLinks{
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.external{
+    color: black;
+    text-decoration: none;
+}
+
+.external:hover{
+    color: rgb(67, 67, 67);
+    cursor: pointer;
+}

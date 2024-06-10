@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams} from "react-router-dom";
+import { useParams, Outlet} from "react-router-dom";
 import { allGroups } from "../../store/group";
 import './Group.css';
 import GroupView from "./GroupView";
@@ -42,6 +42,7 @@ export default function GroupIdPage() {
                     <h1>Group does not exist</h1>
                 </div>
             }
+            <Outlet/>
         </div>
     )
 }

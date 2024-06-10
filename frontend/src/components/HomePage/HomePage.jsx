@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import './HomePage.css';
 import { FaPeopleGroup } from "react-icons/fa6";
@@ -60,6 +60,7 @@ export default function HomePage() {
                     <button>Sign Up for Greets</button>
                 }
             </div>
+            <Outlet/>
         </div>
     )
 }

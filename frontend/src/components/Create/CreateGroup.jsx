@@ -1,7 +1,7 @@
 import {useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { newGroup } from '../../store/group';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
 // import { allGroups } from '../../store/group';
 
@@ -164,6 +164,7 @@ export default function CreateGroup(){
             :
             <h1>Please log in to make a group!</h1>
         }
+        <Outlet/>
         </>
     )
 }

@@ -13,6 +13,7 @@ import UpdateGroup from './components/Update/UpdateGroup';
 import CreateGroup from './components/Create/CreateGroup';
 import CreateEvent from './components/Create/CreateEvent';
 import EventIdPage from './components/Events/EventIdPage';
+import Footer from './components/Footer/Footer';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -82,7 +83,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Footer/>
+    </>
+  );
 }
 
 export default App;

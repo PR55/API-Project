@@ -2,7 +2,7 @@
 import EventsBrowser from "../Events/EventsBrowser";
 import GroupsBrowser from "../Groups/GroupsBrowser";
 import './Browse.css'
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Browser() {
 
@@ -49,6 +49,7 @@ export default function Browser() {
             <div id='browseDisplay'>
                 {url === 'groups'?<GroupsBrowser />:<EventsBrowser/>}
             </div>
+            <Outlet/>
         </div>
     )
 }

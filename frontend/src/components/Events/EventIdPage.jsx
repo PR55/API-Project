@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { allEvents } from "../../store/event";
 import { allGroups } from "../../store/group";
-import { useParams} from "react-router-dom";
+import { Outlet, useParams} from "react-router-dom";
 import EventView from "./EventView";
 import EventViewBody from "./EventViewBody";
 import './Event.css'
@@ -42,6 +42,7 @@ export default function EventIdPage() {
                     <h1>Group does not exist</h1>
                 </div>
             }
+            <Outlet/>
         </div>
     )
 }

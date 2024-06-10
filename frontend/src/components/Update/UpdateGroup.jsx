@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import { allGroups, updateGroup } from '../../store/group';
 import './Update.css'
 export default function UpdateGroup() {
@@ -181,6 +181,7 @@ export default function UpdateGroup() {
                     </div>
                     : <h1>Group does not exist or you are not the owner of the group. Please return to the home page</h1>
             }
+            <Outlet/>
         </>
     )
 }
